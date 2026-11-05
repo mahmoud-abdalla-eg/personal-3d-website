@@ -9,24 +9,39 @@ import { FloatingDock } from "../ui/floating-dock";
 import { ScrollArea } from "../ui/scroll-area";
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
+import { SiGithub } from "react-icons/si";
 import { motion } from "motion/react";
 
 import projects, { Project } from "@/data/projects";
 import { SectionHeader } from "./section-header";
+import { config } from "@/data/config";
 
 import SectionWrapper from "../ui/section-wrapper";
 import ScrollingPreview from "../scrolling-preview";
 
 const ProjectsSection = () => {
   return (
-    <SectionWrapper id="projects" className="max-w-7xl mx-auto md:min-h-[60vh] px-4 flex flex-col justify-center">
+    <SectionWrapper id="projects" className="max-w-7xl mx-auto md:min-h-[100vh] px-4 flex flex-col justify-center">
       <SectionHeader id="projects" title="Projects" />
       {projects.length > 0 ? (
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          {projects.map((project) => (
-            <ProjectCard key={project.id} project={project} />
-          ))}
-        </div>
+        <>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto w-full">
+            {projects.map((project) => (
+              <ProjectCard key={project.id} project={project} />
+            ))}
+          </div>
+          <div className="mt-12 flex justify-center">
+            <Link
+              href={config.social.github || "https://github.com/mahmoud-abdalla-eg"}
+              target="_blank"
+              className="group inline-flex items-center gap-3 px-6 py-3 rounded-full border border-border bg-card/60 hover:bg-card hover:border-primary/50 transition-all text-sm font-medium text-foreground backdrop-blur-sm shadow-sm"
+            >
+              <SiGithub size={18} />
+              <span>Explore all repositories on GitHub</span>
+              <ArrowUpRight className="w-4 h-4 text-muted-foreground group-hover:text-primary group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+            </Link>
+          </div>
+        </>
       ) : (
         <div className="flex flex-col items-center justify-center p-12 my-8 rounded-2xl border border-dashed border-border bg-card/40 backdrop-blur-sm text-center">
           <p className="text-xl md:text-2xl font-bold font-display text-foreground tracking-tight">
@@ -49,15 +64,13 @@ const ProjectCard = ({ project }: { project: Project }) => {
       <ResponsiveDialog>
         <ResponsiveDialogTrigger className="bg-transparent flex justify-center w-full">
           <div
-            className="group relative w-full max-w-[400px] h-auto rounded-lg overflow-hidden ring-1 ring-white/5"
+            className="group relative w-full max-w-[450px] h-auto rounded-lg overflow-hidden ring-1 ring-white/5"
             style={{ aspectRatio: "3/2" }}
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
             onFocus={() => setIsHovered(true)}
             onBlur={() => setIsHovered(false)}
           >
-            {/* `src` can be any aspect ratio (tall pages pan, normal ones fit);
-                the wallpaper is an optional /assets/backgrounds/<id>.jpg. */}
             <ScrollingPreview
               src={project.src}
               alt={project.title}
@@ -66,10 +79,10 @@ const ProjectCard = ({ project }: { project: Project }) => {
             />
             <div className="absolute w-full h-24 bottom-0 left-0 bg-gradient-to-t from-background via-background/80 to-transparent pointer-events-none z-10">
               <div className="flex flex-col h-full items-start justify-end p-4">
-                <div className="text-lg text-left [text-shadow:0_1px_4px_rgba(0,0,0,0.6)]">
+                <div className="text-lg font-semibold text-left [text-shadow:0_1px_4px_rgba(0,0,0,0.6)]">
                   {project.title}
                 </div>
-                <div className="text-xs bg-primary text-primary-foreground rounded-lg w-fit px-2">
+                <div className="text-xs bg-primary text-primary-foreground rounded-lg w-fit px-2 py-0.5 mt-1">
                   {project.category}
                 </div>
               </div>
@@ -96,7 +109,7 @@ const ProjectCard = ({ project }: { project: Project }) => {
                     target="_blank"
                     className="text-xs text-muted-foreground hover:text-foreground transition-colors underline underline-offset-2"
                   >
-                    Source
+                    GitHub
                   </Link>
                 )}
                 {project.live && project.live !== "#" && (
@@ -124,7 +137,7 @@ const ProjectCard = ({ project }: { project: Project }) => {
                 {project.skills.frontend?.length > 0 && (
                   <div className="flex flex-col items-center md:items-start gap-2">
                     <span className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground font-medium">
-                      Frontend
+                      Frontend / Client
                     </span>
                     <FloatingDock items={project.skills.frontend} />
                   </div>
@@ -132,7 +145,7 @@ const ProjectCard = ({ project }: { project: Project }) => {
                 {project.skills.backend?.length > 0 && (
                   <div className="flex flex-col items-center md:items-start gap-2">
                     <span className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground font-medium">
-                      Backend
+                      Backend / Systems
                     </span>
                     <FloatingDock items={project.skills.backend} />
                   </div>

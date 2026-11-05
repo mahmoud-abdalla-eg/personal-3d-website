@@ -51,7 +51,7 @@ const config: Config = {
   site: "https://MahmoudAbdalla.dev",
 
   // for github stars button
-  githubUsername: "mahmoud-abdalla-eg",
+  githubUsername: "MahmoudAhmed995",
   githubRepo: "personal-3d-website",
 
   get ogImg() {
@@ -59,7 +59,7 @@ const config: Config = {
   },
   social: {
     linkedin: "https://www.linkedin.com/in/mahmoud-abdalla-eg/",
-    github: "https://github.com/mahmoud-abdalla-eg",
+    github: "https://github.com/MahmoudAhmed995",
   },
 };
 export { config };

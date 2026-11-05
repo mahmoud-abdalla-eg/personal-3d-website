@@ -1,24 +1,70 @@
 <div align="center">
 
-# 🚀 3D Portfolio
+# 🚀 Mahmoud Abdalla — 3D Portfolio
 
-**A developer portfolio you can actually play with.** Press keys on a 3D keyboard, watch other visitors' cursors fly by, and chat with whoever's online.
+**Full-Stack Developer & Creative Technologist**  
+🎓 Computer Science Student at Jinan University | 🇪🇬 From Egypt | 📍 Based in Guangzhou, China
 
-### [✨ Live Demo → nareshkhatri.dev](https://nareshkhatri.dev)
+A developer portfolio you can actually play with. Press keys on a 3D keyboard, watch other visitors' cursors fly by, and chat with whoever's online.
 
-[![GitHub stars](https://img.shields.io/github/stars/Naresh-Khatri/3d-portfolio?style=flat&logo=github)](https://github.com/Naresh-Khatri/3d-portfolio/stargazers)
-[![Forks](https://img.shields.io/github/forks/Naresh-Khatri/3d-portfolio?style=flat&logo=github)](https://github.com/Naresh-Khatri/3d-portfolio/network/members)
+### [✨ Live Demo → MahmoudAbdalla.dev](https://MahmoudAbdalla.dev)
+
+[![GitHub stars](https://img.shields.io/github/stars/mahmoud-abdalla-eg/personal-3d-website?style=flat&logo=github)](https://github.com/mahmoud-abdalla-eg/personal-3d-website/stargazers)
+[![Forks](https://img.shields.io/github/forks/mahmoud-abdalla-eg/personal-3d-website?style=flat&logo=github)](https://github.com/mahmoud-abdalla-eg/personal-3d-website/network/members)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![Next.js 16](https://img.shields.io/badge/Next.js-16-black?logo=next.js)](https://nextjs.org)
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/Naresh-Khatri/3d-portfolio)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/mahmoud-abdalla-eg/personal-3d-website)
 
 <!-- swap for demo video: drag an .mp4 into the GitHub web editor, paste the user-attachments URL on its own line here -->
-![Portfolio Preview](https://github.com/Naresh-Khatri/3d-portfolio/blob/main/public/assets/projects-screenshots/portfolio/landing.png?raw=true)
+![Portfolio Preview](public/assets/projects-screenshots/portfolio/landing.png)
 
 </div>
 
-> **Free to use!** This portfolio is open source. If you use it, a credit/link back would be really appreciated 🙏
+---
+
+## 👤 About Mahmoud Abdalla
+
+- 🎓 **Education:** B.S. Computer Science and Technology at **Jinan University** (暨南大学), Guangzhou, China (Expected Graduation: Jun 2028)
+- 🌍 **Background:** Originally from **Egypt** 🇪🇬, currently studying & working in **Guangzhou, China** 🇨🇳
+- 💻 **Specialization:** Full-Stack Web Development, REST APIs, SSO Integration, UI/UX Design, and AI-assisted Engineering
+- 🌐 **Portfolio Website:** [https://MahmoudAbdalla.dev](https://MahmoudAbdalla.dev)
+- 📧 **Email:** [Mahmouddesign01@gmail.com](mailto:Mahmouddesign01@gmail.com)
+- 🐙 **GitHub:** [@mahmoud-abdalla-eg](https://github.com/mahmoud-abdalla-eg)
+- 💼 **LinkedIn:** [mahmoud-abdalla-eg](https://www.linkedin.com/in/mahmoud-abdalla-eg/)
+- 💬 **WeChat ID:** Mahmoud-Ahmed995
+
+---
+
+## 💼 Experience
+
+### 1. **Coremail** — Software Development Intern
+*Aug 2026 – Present | Panyu, Guangzhou, Guangdong, China*
+- Diagnose and resolve bugs across front-end and back-end web applications using structured problem-solving.
+- Implement and troubleshoot SSO integrations and REST API integrations between systems and services.
+- Contribute to user interface development, software design, usability improvements, and full-stack web development.
+- Support Artificial Intelligence, automation, and technical data analysis for ongoing product and engineering work.
+- **Tech Stack:** React.js, Node.js, TypeScript, JavaScript, Git, AI / Claude
+
+### 2. **UR Clothing Brand** — Graphic Designer, Web Developer & Product Manager
+*Dec 2023 – Dec 2024 | 6 of October, Egypt*
+- Developed the brand identity, including logo, packaging, and marketing assets, increasing brand recognition by 20% across social media platforms.
+- Built a multi-category e-commerce website with advanced filtering to improve product browsing and discovery.
+- **Tech Stack:** React.js, Tailwind CSS, Node.js, MongoDB, JavaScript, Git
+
+### 3. **Sleep High Branch** — Graphic Designer & Digital Marketer
+*Aug 2023 – Aug 2026 | 6 of October, Egypt*
+- Created graphic content for 10+ digital campaigns, increasing brand visibility by 20% within 3 months.
+- Managed social media campaigns and analyzed performance data to optimize ROI, increasing audience engagement by 30%.
+- **Tech Stack:** UI/UX, Graphic Design, Tailwind CSS, JavaScript
+
+### 4. **Freelance** — Freelance Graphic Designer & Web Designer
+*Nov 2022 – Jun 2025 | Egypt*
+- Designed branding and digital marketing materials for multiple freelance clients, including logos, brochures, and social media graphics.
+- Delivered customized visual identity designs and responsive digital assets meeting client specifications.
+- **Tech Stack:** JavaScript, Tailwind CSS, Git
+
+---
 
 ## ✨ Features
 
@@ -57,8 +103,8 @@
 1. **Clone the repository:**
 
     ```bash
-    git clone https://github.com/Naresh-Khatri/3d-portfolio.git
-    cd 3d-portfolio
+    git clone https://github.com/mahmoud-abdalla-eg/personal-3d-website.git
+    cd personal-3d-website
     ```
 
 2. **Install dependencies:**
@@ -109,43 +155,57 @@ Files under `public/assets` can be replaced at the same URL and cache for one ho
 
 ---
 
-## 🎨 Make It Your Own
+## 🎨 Personal Configuration
 
-All personal info is centralized in [`src/data/config.ts`](src/data/config.ts). Edit this single file to rebrand the portfolio:
+All personal info is centralized in [`src/data/config.ts`](src/data/config.ts):
 
 ```ts
-const config = {
-  title: "Your Name | Your Title",
+const config: Config = {
+  title: "Mahmoud Abdalla | Full-Stack Developer",
   description: {
-    long: "Your long description for SEO...",
-    short: "Your short description...",
+    long: "Explore the portfolio of Mahmoud, a full-stack developer and creative technologist specializing in interactive web experiences, 3D animations, and modern web applications. Let's build something amazing together!",
+    short:
+      "Discover the portfolio of Mahmoud, a full-stack developer creating interactive web experiences and innovative projects.",
   },
-  keywords: ["your", "keywords"],
-  author: "Your Name",
-  email: "you@example.com",
-  site: "https://yoursite.com",
+  keywords: [
+    "Mahmoud",
+    "Mahmoud Abdalla",
+    "portfolio",
+    "full-stack developer",
+    "creative technologist",
+    "web development",
+    "3D animations",
+    "interactive websites",
+    "web design",
+    "GSAP",
+    "React",
+    "Next.js",
+    "TypeScript",
+    "Three.js",
+    "Framer Motion",
+  ],
+  author: "Mahmoud Abdalla",
+  email: "Mahmouddesign01@gmail.com",
+  site: "https://MahmoudAbdalla.dev",
 
-  // GitHub stars button in the header
-  githubUsername: "your-github-username",
-  githubRepo: "your-repo-name",
+  // for github stars button
+  githubUsername: "mahmoud-abdalla-eg",
+  githubRepo: "personal-3d-website",
 
   social: {
-    twitter: "https://x.com/you",
-    linkedin: "https://linkedin.com/in/you",
-    instagram: "https://instagram.com/you",
-    facebook: "https://facebook.com/you",
-    github: "https://github.com/you",
+    linkedin: "https://www.linkedin.com/in/mahmoud-abdalla-eg/",
+    github: "https://github.com/mahmoud-abdalla-eg",
   },
 };
 ```
 
-Other files you'll want to customize:
+Other files to customize:
 
 | File | What to change |
 |---|---|
-| `src/data/projects.tsx` | Your projects, screenshots, descriptions, and tech stacks |
+| `src/data/projects.tsx` | Projects, screenshots, descriptions, and tech stacks |
 | `src/data/constants.ts` | Skills list (name, description, icon) and work experience |
-| `public/assets/` | Your images, OG image, and project screenshots |
+| `public/assets/` | Profile images, OG image, and project screenshots |
 
 ---
 
@@ -175,15 +235,11 @@ The portfolio supports optional realtime features powered by a **separate backen
 
 These features activate automatically when the `NEXT_PUBLIC_WS_URL` environment variable is set. Without it, the portfolio works perfectly fine as a static site — no realtime features, no backend dependency.
 
-> [!NOTE]
-> The backend API is **not open source**. This is intentional! Too many people have cloned the portfolio and claimed they built it from scratch. The realtime server stays private to keep the live experience unique and make it stand out.
-
-
 ---
 
 ## 🚀 Deployment
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/Naresh-Khatri/3d-portfolio)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/mahmoud-abdalla-eg/personal-3d-website)
 
 This site is deployed on **Vercel**. To deploy your own:
 
@@ -194,16 +250,13 @@ This site is deployed on **Vercel**. To deploy your own:
 
 ---
 
-## 🤝 Contributing
+## 🤝 Credits & Acknowledgements
 
-If you'd like to contribute or suggest improvements, feel free to open an issue or submit a pull request. All contributions are welcome!
+- Built upon the open-source 3D interactive portfolio architecture created by [Naresh Khatri](https://github.com/Naresh-Khatri/3d-portfolio).
+- Rebranded and maintained by **[Mahmoud Abdalla](https://github.com/mahmoud-abdalla-eg)**.
 
 ---
 
 ## 📄 License
 
 This project is open source and available under the [MIT License](LICENSE).
-
-If you use this portfolio, a credit or link back to the [original repo](https://github.com/Naresh-Khatri/3d-portfolio) would be much appreciated ❤️
-
-Note on analytics: a deployed copy reports its own hostname once per browser (nothing else — no visitor, page, or referrer data) so I can see where the template gets used.
