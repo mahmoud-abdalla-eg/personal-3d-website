@@ -2,7 +2,7 @@
 
 # 🚀 Mahmoud Abdalla — 3D Portfolio
 
-**Full-Stack Developer & Creative Technologist**  
+**Full-Stack Developer & AI Systems Analyst**  
 🎓 Computer Science Student at Jinan University | 🇪🇬 From Egypt | 📍 Based in Guangzhou, China
 
 A developer portfolio you can actually play with. Press keys on a 3D keyboard, watch other visitors' cursors fly by, and chat with whoever's online.
