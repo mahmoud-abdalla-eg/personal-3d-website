@@ -3,10 +3,10 @@
 import { useCallback, useContext, useEffect, useState } from "react";
 import type { Socket } from "socket.io-client";
 import { SocketContext } from "@/contexts/socketio";
-import { SKILLS } from "@/data/constants";
+import { KEYBOARD_SKILLS } from "@/data/constants";
 import { mergeKeyboardCounts } from "./wear";
 
-const skills = new Set(Object.values(SKILLS).map(skill => skill.name));
+const skills = new Set(KEYBOARD_SKILLS.map(skill => skill.name));
 const sequences = new WeakMap<Socket, number>();
 
 export function useKeyboardCounts() {

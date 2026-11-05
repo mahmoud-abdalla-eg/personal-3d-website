@@ -2,7 +2,7 @@
 
 import { memo, useCallback, useEffect, useMemo, useRef, useState, type CSSProperties } from "react";
 import { ChibiScene, type ChibiSceneApi, type ScenePointerEvent, type RuntimeEvent } from "@chibi3d/runtime";
-import { SKILLS } from "@/data/constants";
+import { SKILLS, KEYBOARD_SKILLS } from "@/data/constants";
 import { setSceneStatus } from "@/lib/scene-health";
 import { usePreloader } from "../preloader";
 import { createKeyboardScene, resolveKeyboardAsset, type KeyboardKey, type KeyboardSkill } from "./scene";
@@ -36,7 +36,7 @@ export default function KeyboardScene({ maxDpr }: { maxDpr: number }) {
   const [section, setSection] = useState<KeyboardSection>("hero");
   const [selected, setSelected] = useState<KeyboardSkill | null>(null);
   const playSound = useKeyboardSounds();
-  const scene = useMemo(() => createKeyboardScene(Object.values(SKILLS).map((skill) => ({
+  const scene = useMemo(() => createKeyboardScene(KEYBOARD_SKILLS.map((skill) => ({
     ...skill, icon: skill.keyboardIcon ?? skill.icon,
   }))), []);
   const { settings: graphics, markActive } = useAdaptiveGraphics(ready && !isLoading);

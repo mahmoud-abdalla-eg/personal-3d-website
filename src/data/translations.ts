@@ -354,6 +354,8 @@ export const SKILL_DESCRIPTIONS_ZH: Record<string, string> = {
   homeassistant: "用 YAML 和灵感构筑的全屋智能，灯光听我号令 🏠💡",
   proxmox: "衣柜里塞进整个数据中心，电费单直呼内行 🖥️🔥",
   steam: "凌晨 3 点「再来亿把就睡」，夜夜如此 🎮🌙",
+  photoshop: "Adobe Photoshop 视觉设计、图像处理与数字绘图 🎨✨",
+  illustrator: "Adobe Illustrator 矢量品牌设计、Logo 与排版插画 📐🚀",
 };
 
 export interface LocalizedExperience {
@@ -413,7 +415,7 @@ export const EXPERIENCE_ZH: LocalizedExperience[] = [
       "主导策划并输出 10+ 场数字化营销活动的视觉设计，3 个月内将品牌曝光度提升 20%。",
       "运营管理社媒投放矩阵，深入复盘广告数据以优化投资回报率（ROI），使用户互动率提升 30%。",
     ],
-    skills: [SkillNames.TAILWIND, SkillNames.JS],
+    skills: [SkillNames.PHOTOSHOP, SkillNames.ILLUSTRATOR],
   },
   {
     id: 4,
@@ -424,7 +426,7 @@ export const EXPERIENCE_ZH: LocalizedExperience[] = [
       "为多家商业客户提供品牌形象及数字营销设计服务，包括 Logo、宣传折页与社媒宣传物料。",
       "按照客户定制化诉求，交付高质量的品牌视觉识别体系与多端自适应数字资产。",
     ],
-    skills: [SkillNames.JS, SkillNames.TAILWIND, SkillNames.GIT],
+    skills: [SkillNames.PHOTOSHOP, SkillNames.ILLUSTRATOR],
   },
 ];
 

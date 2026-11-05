@@ -25,6 +25,8 @@ export enum SkillNames {
   HOME_ASSISTANT = "homeassistant",
   PROXMOX = "proxmox",
   STEAM = "steam",
+  PHOTOSHOP = "photoshop",
+  ILLUSTRATOR = "illustrator",
 }
 export type Skill = {
   id: number;
@@ -287,7 +289,50 @@ using use = useUsing("use")`,
     keyboardIcon: "/assets/keyboard/logos/steam.svg",
     keyboardColor: "#1b2838",
   },
+  [SkillNames.PHOTOSHOP]: {
+    id: 25,
+    name: "photoshop",
+    label: "Photoshop",
+    shortDescription: "Adobe Photoshop for visual design, digital artwork and photo manipulation",
+    color: "#31a8ff",
+    icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/photoshop/photoshop-original.svg",
+  },
+  [SkillNames.ILLUSTRATOR]: {
+    id: 26,
+    name: "illustrator",
+    label: "Illustrator",
+    shortDescription: "Adobe Illustrator for vector branding, typography and digital illustrations",
+    color: "#ff9a00",
+    icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/illustrator/illustrator-plain.svg",
+  },
 };
+
+export const KEYBOARD_SKILLS: Skill[] = [
+  SKILLS[SkillNames.JS],
+  SKILLS[SkillNames.TS],
+  SKILLS[SkillNames.REACT],
+  SKILLS[SkillNames.NEXTJS],
+  SKILLS[SkillNames.VUE],
+  SKILLS[SkillNames.EXPO],
+  SKILLS[SkillNames.TAILWIND],
+  SKILLS[SkillNames.NODEJS],
+  SKILLS[SkillNames.EXPRESS],
+  SKILLS[SkillNames.BUN],
+  SKILLS[SkillNames.POSTGRES],
+  SKILLS[SkillNames.MONGODB],
+  SKILLS[SkillNames.LINUX],
+  SKILLS[SkillNames.GIT],
+  SKILLS[SkillNames.VIM],
+  SKILLS[SkillNames.DOCKER],
+  SKILLS[SkillNames.NGINX],
+  SKILLS[SkillNames.CLAUDE],
+  SKILLS[SkillNames.CLOUDFLARE],
+  SKILLS[SkillNames.GCP],
+  SKILLS[SkillNames.AWS],
+  SKILLS[SkillNames.HOME_ASSISTANT],
+  SKILLS[SkillNames.PROXMOX],
+  SKILLS[SkillNames.STEAM],
+];
 
 export type Experience = {
   id: number;
@@ -348,8 +393,8 @@ export const EXPERIENCE: Experience[] = [
       "Managed social media campaigns and analyzed performance data to optimize ROI, increasing audience engagement by 30%.",
     ],
     skills: [
-      SkillNames.TAILWIND,
-      SkillNames.JS,
+      SkillNames.PHOTOSHOP,
+      SkillNames.ILLUSTRATOR,
     ],
   },
   {
@@ -362,9 +407,8 @@ export const EXPERIENCE: Experience[] = [
       "Delivered customized visual identity designs and responsive digital assets meeting client specifications.",
     ],
     skills: [
-      SkillNames.JS,
-      SkillNames.TAILWIND,
-      SkillNames.GIT,
+      SkillNames.PHOTOSHOP,
+      SkillNames.ILLUSTRATOR,
     ],
   },
 ];

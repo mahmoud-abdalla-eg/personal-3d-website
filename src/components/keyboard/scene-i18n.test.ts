@@ -1,7 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { createKeyboardScene } from "./scene";
-import { SKILLS, SkillNames } from "@/data/constants";
+import { SKILLS, SkillNames, KEYBOARD_SKILLS } from "@/data/constants";
 
 test("Keyboard scene creates bilingual labels for default prompt", () => {
   const skills = [
@@ -23,7 +23,7 @@ test("Keyboard scene creates bilingual labels for default prompt", () => {
 });
 
 test("Keyboard scene creates English and Chinese labels for every skill key", () => {
-  const skills = Object.values(SKILLS).map((skill) => ({
+  const skills = KEYBOARD_SKILLS.map((skill) => ({
     ...skill,
     icon: skill.keyboardIcon ?? skill.icon,
   }));
