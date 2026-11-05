@@ -1,3 +1,5 @@
+"use client";
+
 import AceTernityLogo from "@/components/logos/aceternity";
 import SlideShow from "@/components/slide-show";
 import { Button } from "@/components/ui/button";
@@ -6,6 +8,7 @@ import { ArrowUpRight, ExternalLink, Link2, MoveUpRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { ReactNode } from "react";
+import { useLanguage } from "@/contexts/i18n-context";
 const BASE_PATH = "/assets/projects-screenshots";
 
 // Renders a brand SVG from /public as a monochrome glyph that inherits the
@@ -31,7 +34,8 @@ const MaskIcon = ({ src, title }: { src: string; title?: string }) => (
   />
 );
 
-const ProjectsLinks = ({ live, repo }: { live?: string; repo?: string }) => {
+export const ProjectsLinks = ({ live, repo }: { live?: string; repo?: string }) => {
+  const { t } = useLanguage();
   return (
     <div className="flex flex-col md:flex-row items-center justify-start gap-3 my-3 mb-8">
       {live && live !== "#" && (
@@ -42,7 +46,7 @@ const ProjectsLinks = ({ live, repo }: { live?: string; repo?: string }) => {
           href={live}
         >
           <Button variant={"default"} size={"sm"}>
-            Visit Project
+            {t("projects.visitProject", "Visit Project")}
             <ArrowUpRight className="ml-3 w-5 h-5" />
           </Button>
         </Link>
@@ -55,7 +59,7 @@ const ProjectsLinks = ({ live, repo }: { live?: string; repo?: string }) => {
           href={repo}
         >
           <Button variant={"default"} size={"sm"}>
-            GitHub
+            {t("projects.github", "GitHub")}
             <ArrowUpRight className="ml-3 w-5 h-5" />
           </Button>
         </Link>
