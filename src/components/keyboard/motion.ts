@@ -78,7 +78,7 @@ export function createKeyboardMotion(
     const fit = Math.min(1, window.innerWidth / window.innerHeight * 1.05);
     const [centerX, centerY, centerZ] = scene.document.camera.target;
     const size = fit * (section === "hero" ? 0.8 : section === "contact" ? 0.75 : section === "skills" ? (mobile ? 0.88 : 1.05) : 0.95);
-    const right = !mobile && section === "hero" ? 2.5 : !mobile && section === "contact" ? 3.8 : 0;
+    const right = !mobile && section === "hero" ? 3.6 : !mobile && section === "contact" ? 3.8 : 0;
     const up = mobile && section === "hero" ? -1.8 : section === "contact" ? -0.8 : 0;
     return {
       // The placement origin is the keyboard's geometry center, independent of its labels.
