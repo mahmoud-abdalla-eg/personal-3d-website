@@ -211,7 +211,7 @@ const projects: Project[] = [
     id: "mandarin-flow-hsk",
     category: "EdTech / Learning Platform",
     title: "Mandarin Flow HSK",
-    src: `${BASE_PATH}/mandarin-flow-hsk/landing.png`,
+    src: `${BASE_PATH}/mandarin-flow-hsk/preview-v2.png`,
     screenshots: ["landing.png"],
     skills: {
       frontend: [
@@ -255,7 +255,7 @@ const projects: Project[] = [
     id: "markread",
     category: "Desktop App / Markdown Viewer",
     title: "MarkRead",
-    src: `${BASE_PATH}/markread/landing.png`,
+    src: `${BASE_PATH}/markread/preview-v2.png`,
     screenshots: ["landing.png"],
     skills: {
       frontend: [
@@ -298,7 +298,7 @@ const projects: Project[] = [
     id: "ai-hiring-workbench",
     category: "AI / Candidate Evaluation",
     title: "AI Hiring Workbench",
-    src: `${BASE_PATH}/ai-hiring-workbench/landing.png`,
+    src: `${BASE_PATH}/ai-hiring-workbench/preview-v2.png`,
     screenshots: ["landing.png"],
     skills: {
       frontend: [

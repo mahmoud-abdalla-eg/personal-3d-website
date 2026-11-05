@@ -25,14 +25,16 @@ const STORAGE_KEY = "portfolio-lang";
  * If Chinese, returns 'zh'. Otherwise defaults to 'en'.
  */
 export function getBrowserLanguage(): Language {
-  if (typeof window === "undefined" || typeof navigator === "undefined") {
+  if (typeof navigator === "undefined") {
     return "en";
   }
 
   const navLanguages =
     navigator.languages && navigator.languages.length > 0
       ? navigator.languages
-      : [navigator.language];
+      : navigator.language
+      ? [navigator.language]
+      : [];
 
   for (const lang of navLanguages) {
     if (!lang) continue;
@@ -51,15 +53,15 @@ export function getBrowserLanguage(): Language {
  * 2. If none, inspects browser languages (Chinese -> 'zh', others -> 'en')
  */
 export function detectInitialLanguage(): Language {
-  if (typeof window === "undefined") return "en";
-
-  try {
-    const saved = localStorage.getItem(STORAGE_KEY);
-    if (saved === "zh" || saved === "en") {
-      return saved;
+  if (typeof localStorage !== "undefined") {
+    try {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (saved === "zh" || saved === "en") {
+        return saved;
+      }
+    } catch {
+      // localStorage unavailable (sandboxed / privacy mode)
     }
-  } catch {
-    // localStorage unavailable (sandboxed / privacy mode)
   }
 
   return getBrowserLanguage();
