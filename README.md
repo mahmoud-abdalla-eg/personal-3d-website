@@ -1,13 +1,13 @@
 <div align="center">
 
-# 🚀 Mahmoud Abdalla — 3D Portfolio
+# Mahmoud Abdalla — 3D Portfolio
 
 **Full-Stack Developer & AI Systems Analyst**  
-🎓 Computer Science Student at Jinan University | 🇪🇬 From Egypt | 📍 Based in Guangzhou, China
+Computer Science Student at Jinan University | From Egypt | Based in Guangzhou, China
 
 A developer portfolio you can actually play with. Press keys on a 3D keyboard, watch other visitors' cursors fly by, and chat with whoever's online.
 
-### [✨ Live Demo → mahmoudabdalla.vercel.app](https://mahmoudabdalla.vercel.app)
+### [Live Demo → mahmoudabdalla.vercel.app](https://mahmoudabdalla.vercel.app)
 
 [![GitHub stars](https://img.shields.io/github/stars/mahmoud-abdalla-eg/personal-3d-website?style=flat&logo=github)](https://github.com/mahmoud-abdalla-eg/personal-3d-website/stargazers)
 [![Forks](https://img.shields.io/github/forks/mahmoud-abdalla-eg/personal-3d-website?style=flat&logo=github)](https://github.com/mahmoud-abdalla-eg/personal-3d-website/network/members)
@@ -21,32 +21,32 @@ A developer portfolio you can actually play with. Press keys on a 3D keyboard, w
 
 ---
 
-## 👤 About Mahmoud Abdalla
+## About Mahmoud Abdalla
 
-- 🎓 **Education:** B.S. Computer Science and Technology at **Jinan University** (暨南大学), Guangzhou, China (Expected Graduation: Jun 2028)
-- 🌍 **Background:** Originally from **Egypt** 🇪🇬, currently studying & working in **Guangzhou, China** 🇨🇳
-- 💻 **Specialization:** Full-Stack Web Development, REST APIs, SSO Integration, UI/UX Design, and AI-assisted Engineering
-- 🌐 **Portfolio Website:** [https://mahmoudabdalla.vercel.app](https://mahmoudabdalla.vercel.app)
-- 📧 **Email:** [Mahmouddesign01@gmail.com](mailto:Mahmouddesign01@gmail.com)
-- 🐙 **GitHub:** [@mahmoud-abdalla-eg](https://github.com/mahmoud-abdalla-eg)
-- 💼 **LinkedIn:** [mahmoud-abdalla-eg](https://www.linkedin.com/in/mahmoud-abdalla-eg/)
-- 💬 **WeChat ID:** Mahmoud-Ahmed995
+- **Education:** B.S. Computer Science and Technology at **Jinan University** (暨南大学), Guangzhou, China (Expected Graduation: Jun 2028)
+- **Background:** Originally from **Egypt**, currently studying & working in **Guangzhou, China**
+- **Specialization:** Full-Stack Web Development, REST APIs, SSO Integration, UI/UX Design, and AI-assisted Engineering
+- **Portfolio Website:** [https://mahmoudabdalla.vercel.app](https://mahmoudabdalla.vercel.app)
+- **Email:** [Mahmouddesign01@gmail.com](mailto:Mahmouddesign01@gmail.com)
+- **GitHub:** [@mahmoud-abdalla-eg](https://github.com/mahmoud-abdalla-eg)
+- **LinkedIn:** [mahmoud-abdalla-eg](https://www.linkedin.com/in/mahmoud-abdalla-eg/)
+- **WeChat ID:** Mahmoud-Ahmed995
 
 ---
 
-## ✨ Features
+## Features
 
 - **Interactive 3D Keyboard** — Programmatically generated Chibi keyboard where each keycap represents a skill, revealing titles and descriptions on hover/press. Try colors, logos, and layouts in the [Chibi keycap customizer](https://chibi.nareshkhatri.dev/demo/keycaps).
-- **Live Multiplayer** — See other visitors' cursors in realtime, who's online, and chat with them ([details](#-realtime-features-optional))
-- **Buttery Animations** — GSAP + Framer Motion powered scroll, hover, and reveal animations
+- **Live Multiplayer** — See other visitors' cursors in realtime, who's online, and chat with them ([details](#realtime-features-optional))
+- **Smooth Animations** — GSAP + Framer Motion powered scroll, hover, and reveal animations
 - **Space Theme** — Floating particles on a dark canvas for a cosmic vibe
-- **Easter Eggs** — Open DevTools and follow the clues 🐱
+- **Easter Eggs** — Open DevTools and follow the clues
 - **Light & Dark Mode** — Full theme support with cheeky disclaimer toasts
 - **Responsive** — Works across all screen sizes
 - **Contact Form** — Email delivery via Resend
 - **Analytics** _(optional)_ — Umami analytics integration
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 | Layer | Technologies |
 |---|---|
@@ -59,7 +59,7 @@ A developer portfolio you can actually play with. Press keys on a 3D keyboard, w
 
 ---
 
-## 🚀 Getting Started
+## Getting Started
 
 ### Prerequisites
 
@@ -102,7 +102,7 @@ A developer portfolio you can actually play with. Press keys on a 3D keyboard, w
     npm run dev
     ```
 
-5. Open [http://localhost:3000](http://localhost:3000) and see the magic ✨
+5. Open [http://localhost:3000](http://localhost:3000)
 
 ---
 
@@ -123,7 +123,7 @@ Files under `public/assets` can be replaced at the same URL and cache for one ho
 
 ---
 
-## 🎨 Personal Configuration
+## Personal Configuration
 
 All personal info is centralized in [`src/data/config.ts`](src/data/config.ts). Edit this file to customize your info:
 
@@ -163,7 +163,7 @@ Other files to customize:
 
 ---
 
-## ⌨️ Customize the 3D keyboard
+## Customize the 3D Keyboard
 
 Try colors, logos, and layouts in the [Chibi keycap customizer](https://chibi.nareshkhatri.dev/demo/keycaps), then apply your choices to `SKILLS` in [`src/data/constants.ts`](src/data/constants.ts):
 
@@ -178,26 +178,26 @@ Keys follow the order of `SKILLS`. To change the default six columns, pass a sec
 
 ---
 
-## 🔌 Realtime Features (Optional)
+## Realtime Features (Optional)
 
 The portfolio supports optional realtime features powered by a **separate backend API**:
 
-- 🖱️ **Live cursors** — See other visitors' cursors in realtime
-- 👥 **Online presence** — Shows who's currently on the site
-- 💬 **Chat** — Live chat between visitors
+- **Live cursors** — See other visitors' cursors in realtime
+- **Online presence** — Shows who's currently on the site
+- **Chat** — Live chat between visitors
 - **Zombie Survival** with multiplayer and leaderboards on the live site.
 
 These features activate automatically when the `NEXT_PUBLIC_WS_URL` environment variable is set. Without it, the portfolio works perfectly fine as a static site — no realtime features, no backend dependency.
 
 ---
 
-## 🤝 Credits & Acknowledgements
+## Credits & Acknowledgements
 
 - Built using the open-source 3D interactive portfolio template created by [Naresh Khatri](https://github.com/Naresh-Khatri/3d-portfolio).
 - Customized and maintained by **[Mahmoud Abdalla](https://github.com/mahmoud-abdalla-eg)**.
 
 ---
 
-## 📄 License
+## License
 
 This project is open source and available under the [MIT License](LICENSE).
