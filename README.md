@@ -50,12 +50,12 @@ A developer portfolio you can actually play with. Press keys on a 3D keyboard, w
 
 | Layer | Technologies |
 |---|---|
-| **Framework** | Next.js 16.2.2, React 19.2.4, TypeScript |
-| **Styling** | Tailwind CSS, Shadcn UI, Aceternity UI |
-| **Animation** | GSAP, Framer Motion |
-| **3D** | @chibi3d/runtime, Three.js, React Three Fiber |
-| **Email** | Resend |
-| **Misc** | Lenis (smooth scroll), Zod, next-themes |
+| **Framework** | Next.js 16.2.2, React 19.2.4, TypeScript 5.9 |
+| **Styling** | Tailwind CSS 3.4.1, Shadcn UI, Aceternity UI |
+| **Animation** | GSAP 3.12.5, Motion 12.23 (Framer Motion) |
+| **3D** | Three.js 0.185.1, React Three Fiber 9.8.1, @chibi3d/runtime 0.5.0 |
+| **Email** | Resend 4.0.0 |
+| **Misc** | Lenis 1.1.6 (smooth scroll), Zod 3.23.8, next-themes 0.4.6 |
 
 ---
 
