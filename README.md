@@ -7,7 +7,7 @@
 
 A developer portfolio you can actually play with. Press keys on a 3D keyboard, watch other visitors' cursors fly by, and chat with whoever's online.
 
-<!-- ### [✨ Live Demo → MahmoudAbdalla.dev](https://MahmoudAbdalla.dev) -->
+### [✨ Live Demo → mahmoudabdalla.vercel.app](https://mahmoudabdalla.vercel.app)
 
 [![GitHub stars](https://img.shields.io/github/stars/MahmoudAhmed995/personal-3d-website?style=flat&logo=github)](https://github.com/MahmoudAhmed995/personal-3d-website/stargazers)
 [![Forks](https://img.shields.io/github/forks/MahmoudAhmed995/personal-3d-website?style=flat&logo=github)](https://github.com/MahmoudAhmed995/personal-3d-website/network/members)
@@ -26,7 +26,7 @@ A developer portfolio you can actually play with. Press keys on a 3D keyboard, w
 - 🎓 **Education:** B.S. Computer Science and Technology at **Jinan University** (暨南大学), Guangzhou, China (Expected Graduation: Jun 2028)
 - 🌍 **Background:** Originally from **Egypt** 🇪🇬, currently studying & working in **Guangzhou, China** 🇨🇳
 - 💻 **Specialization:** Full-Stack Web Development, REST APIs, SSO Integration, UI/UX Design, and AI-assisted Engineering
-- 🌐 **Portfolio Website:** [https://MahmoudAbdalla.dev](https://MahmoudAbdalla.dev)
+- 🌐 **Portfolio Website:** [https://mahmoudabdalla.vercel.app](https://mahmoudabdalla.vercel.app)
 - 📧 **Email:** [Mahmouddesign01@gmail.com](mailto:Mahmouddesign01@gmail.com)
 - 🐙 **GitHub:** [@MahmoudAhmed995](https://github.com/MahmoudAhmed995)
 - 💼 **LinkedIn:** [mahmoud-abdalla-eg](https://www.linkedin.com/in/mahmoud-abdalla-eg/)

@@ -23,18 +23,18 @@ export interface Config {
 }
 
 const config: Config = {
-  title: "Mahmoud Abdalla | Full-Stack Developer",
+  title: "Mahmoud Abdalla | Full-Stack Developer & AI Systems Analyst",
   description: {
-    long: "Explore the portfolio of Mahmoud, a full-stack developer and creative technologist specializing in interactive web experiences, 3D animations, and modern web applications. Let's build something amazing together!",
+    long: "Explore the portfolio of Mahmoud, a full-stack developer and AI systems analyst specializing in interactive web experiences, 3D animations, and modern web applications. Let's build something amazing together!",
     short:
-      "Discover the portfolio of Mahmoud, a full-stack developer creating interactive web experiences and innovative projects.",
+      "Discover the portfolio of Mahmoud, a full-stack developer and AI systems analyst creating interactive web experiences and innovative projects.",
   },
   keywords: [
     "Mahmoud",
     "Mahmoud Abdalla",
     "portfolio",
     "full-stack developer",
-    "creative technologist",
+    "AI systems analyst",
     "web development",
     "3D animations",
     "interactive websites",
@@ -48,7 +48,7 @@ const config: Config = {
   ],
   author: "Mahmoud Abdalla",
   email: "Mahmouddesign01@gmail.com",
-  site: "https://MahmoudAbdalla.dev",
+  site: "https://mahmoudabdalla.vercel.app",
 
   // for github stars button
   githubUsername: "MahmoudAhmed995",
