@@ -192,11 +192,21 @@ export default function KeyboardScene({ maxDpr }: { maxDpr: number }) {
       />
       {section === "skills" && ready && (
         <div className="pointer-events-none fixed inset-x-4 bottom-8 z-20 text-center text-foreground">
-          <p className="sr-only">{available ? `${total.toLocaleString("en-US")} keyboard presses by all visitors` : "Shared keyboard count unavailable"}</p>
+          <p className="sr-only">
+            {available
+              ? `${total.toLocaleString(isChinese ? "zh-CN" : "en-US")} ${t("skills.srPresses", "keyboard presses by all visitors")}`
+              : t("skills.srPressesUnavailable", "Shared keyboard count unavailable")}
+          </p>
           <div aria-live="polite" className="sr-only">
-            <p className="text-xl font-semibold">{selected?.label ?? "Explore my skills"}</p>
+            <p className="text-xl font-semibold">
+              {selected?.label ?? t("skills.exploreSkills", "Explore my skills")}
+            </p>
             <p className="mt-1 text-sm text-muted-foreground">
-              {selected?.shortDescription ?? "Hover, tap, or press a key"}
+              {selected
+                ? isChinese
+                  ? SKILL_DESCRIPTIONS_ZH[selected.name] || selected.shortDescription
+                  : selected.shortDescription
+                : t("skills.pressKeyHint", "Hover, tap, or press a key")}
             </p>
           </div>
           <a
@@ -205,7 +215,7 @@ export default function KeyboardScene({ maxDpr }: { maxDpr: number }) {
             rel="noreferrer"
             className="pointer-events-auto text-xs text-muted-foreground underline underline-offset-4"
           >
-            Rendered with Chibi
+            {t("skills.chibiCredit", "Rendered with Chibi")}
           </a>
         </div>
       )}

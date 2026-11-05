@@ -9,8 +9,8 @@ A developer portfolio you can actually play with. Press keys on a 3D keyboard, w
 
 ### [✨ Live Demo → mahmoudabdalla.vercel.app](https://mahmoudabdalla.vercel.app)
 
-[![GitHub stars](https://img.shields.io/github/stars/MahmoudAhmed995/personal-3d-website?style=flat&logo=github)](https://github.com/MahmoudAhmed995/personal-3d-website/stargazers)
-[![Forks](https://img.shields.io/github/forks/MahmoudAhmed995/personal-3d-website?style=flat&logo=github)](https://github.com/MahmoudAhmed995/personal-3d-website/network/members)
+[![GitHub stars](https://img.shields.io/github/stars/mahmoud-abdalla-eg/personal-3d-website?style=flat&logo=github)](https://github.com/mahmoud-abdalla-eg/personal-3d-website/stargazers)
+[![Forks](https://img.shields.io/github/forks/mahmoud-abdalla-eg/personal-3d-website?style=flat&logo=github)](https://github.com/mahmoud-abdalla-eg/personal-3d-website/network/members)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![Next.js 16](https://img.shields.io/badge/Next.js-16-black?logo=next.js)](https://nextjs.org)
 
@@ -28,7 +28,7 @@ A developer portfolio you can actually play with. Press keys on a 3D keyboard, w
 - 💻 **Specialization:** Full-Stack Web Development, REST APIs, SSO Integration, UI/UX Design, and AI-assisted Engineering
 - 🌐 **Portfolio Website:** [https://mahmoudabdalla.vercel.app](https://mahmoudabdalla.vercel.app)
 - 📧 **Email:** [Mahmouddesign01@gmail.com](mailto:Mahmouddesign01@gmail.com)
-- 🐙 **GitHub:** [@MahmoudAhmed995](https://github.com/MahmoudAhmed995)
+- 🐙 **GitHub:** [@mahmoud-abdalla-eg](https://github.com/mahmoud-abdalla-eg)
 - 💼 **LinkedIn:** [mahmoud-abdalla-eg](https://www.linkedin.com/in/mahmoud-abdalla-eg/)
 - 💬 **WeChat ID:** Mahmoud-Ahmed995
 
@@ -71,7 +71,7 @@ A developer portfolio you can actually play with. Press keys on a 3D keyboard, w
 1. **Clone the repository:**
 
     ```bash
-    git clone https://github.com/MahmoudAhmed995/personal-3d-website.git
+    git clone https://github.com/mahmoud-abdalla-eg/personal-3d-website.git
     cd personal-3d-website
     ```
 
@@ -194,7 +194,7 @@ These features activate automatically when the `NEXT_PUBLIC_WS_URL` environment 
 ## 🤝 Credits & Acknowledgements
 
 - Built using the open-source 3D interactive portfolio template created by [Naresh Khatri](https://github.com/Naresh-Khatri/3d-portfolio).
-- Customized and maintained by **[Mahmoud Abdalla](https://github.com/MahmoudAhmed995)**.
+- Customized and maintained by **[Mahmoud Abdalla](https://github.com/mahmoud-abdalla-eg)**.
 
 ---
 

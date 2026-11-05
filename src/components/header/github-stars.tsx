@@ -14,13 +14,14 @@ export default async function GitHubStars({ className }: { className?: string })
     return null;
   }
 
-  if (stars === null) return null;
+  // Fallback to 0 if rate-limited or fetch fails so the button doesn't disappear
+  const displayStars = stars ?? 0;
 
   return (
     <GitHubStarsButton
       username={config.githubUsername}
       repo={config.githubRepo}
-      stars={stars}
+      stars={displayStars}
       className={className}
     />
   );
