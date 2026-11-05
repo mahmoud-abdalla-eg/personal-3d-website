@@ -20,6 +20,13 @@ export interface Config {
   githubRepo: string;
   readonly ogImg: string;
   social: SocialConfig;
+  resume: {
+    en: string;
+    zh: string;
+    folder: string;
+    enPdf: string;
+    zhPdf: string;
+  };
 }
 
 const config: Config = {
@@ -60,6 +67,13 @@ const config: Config = {
   social: {
     linkedin: "https://www.linkedin.com/in/mahmoud-abdalla-eg/",
     github: "https://github.com/mahmoud-abdalla-eg",
+  },
+  resume: {
+    en: "https://drive.google.com/file/d/1HAKa4iuu_Cb3SEoo41dqoFmvt1e-U767/view?usp=sharing",
+    zh: "https://drive.google.com/file/d/1bX1Zm-6_KMHQ_L4LXrrd-s5EpYIhYALs/view?usp=sharing",
+    folder: "https://drive.google.com/drive/folders/1BOKBKhfPxQ890HNSNxX0EyzPdD4osYgz",
+    enPdf: "/CV_Mahmoud_Abdalla_EN.pdf",
+    zhPdf: "/CV_Mahmoud_Abdalla_ZH.pdf",
   },
 };
 export { config };

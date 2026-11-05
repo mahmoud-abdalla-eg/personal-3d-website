@@ -9,6 +9,9 @@ import {
 } from "../data/translations";
 import { SKILLS, EXPERIENCE } from "../data/constants";
 import projects from "../data/projects";
+import { config } from "../data/config";
+import fs from "node:fs";
+import path from "node:path";
 
 test("Language detection: detects Chinese when browser language starts with zh", () => {
   const originalNav = globalThis.navigator;
@@ -262,4 +265,24 @@ test("Language listener: window languagechange updates language dynamically", ()
     configurable: true,
     writable: true,
   });
+});
+
+test("CV language routing: correctly maps to English and Chinese CVs", () => {
+  // Check that English CV drive link points to Mahmoud's English CV
+  assert.ok(config.resume.en.includes("1HAKa4iuu_Cb3SEoo41dqoFmvt1e-U767"));
+
+  // Check that Chinese CV drive link points to Mahmoud's Chinese CV
+  assert.ok(config.resume.zh.includes("1bX1Zm-6_KMHQ_L4LXrrd-s5EpYIhYALs"));
+
+  // Check that local PDF files exist in the public directory
+  const publicDir = path.resolve(__dirname, "../../public");
+  const enPdfPath = path.join(publicDir, config.resume.enPdf);
+  const zhPdfPath = path.join(publicDir, config.resume.zhPdf);
+
+  assert.ok(fs.existsSync(enPdfPath), `Missing English PDF file: ${enPdfPath}`);
+  assert.ok(fs.existsSync(zhPdfPath), `Missing Chinese PDF file: ${zhPdfPath}`);
+
+  // Both files must have valid PDF sizes
+  assert.ok(fs.statSync(enPdfPath).size > 10000, "English CV PDF is too small or corrupted");
+  assert.ok(fs.statSync(zhPdfPath).size > 10000, "Chinese CV PDF is too small or corrupted");
 });

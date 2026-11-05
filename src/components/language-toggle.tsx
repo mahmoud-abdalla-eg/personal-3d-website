@@ -19,38 +19,39 @@ export default function LanguageToggle({
 
   return (
     <Button
-      variant="ghost"
+      variant="outline"
       size="sm"
       onClick={toggleLanguage}
       className={cn(
-        "h-8 px-2.5 rounded-full border border-border/40 hover:border-border",
-        "bg-background/40 hover:bg-secondary/60 backdrop-blur-sm",
-        "flex items-center gap-1.5 font-mono text-xs transition-all duration-300",
+        "h-9 px-3.5 rounded-full border border-border/80 hover:border-border",
+        "bg-card/70 hover:bg-card/95 backdrop-blur-md shadow-xs",
+        "flex items-center gap-2 font-mono text-xs md:text-sm transition-all duration-300",
+        "cursor-can-hover select-none",
         className
       )}
       aria-label={t("misc.langSwitchAria", "Switch language")}
-      title={language === "en" ? "切换为中文" : "Switch to English"}
+      title={language === "en" ? "切换为中文 (Switch to Chinese)" : "Switch to English (切换为英文)"}
     >
-      <Languages className="size-3.5 text-muted-foreground transition-transform duration-300 group-hover:rotate-12" />
+      <Languages className="size-4 shrink-0 text-foreground/85 transition-transform duration-300 group-hover:rotate-12" />
       {showLabel && (
-        <span className="flex items-center gap-1 select-none text-[11px] font-medium tracking-wide">
+        <span className="flex items-center gap-1.5 select-none font-medium tracking-wide">
           <span
             className={cn(
-              "transition-colors",
+              "px-1.5 py-0.5 rounded text-xs transition-all duration-200",
               language === "en"
-                ? "text-foreground font-bold"
-                : "text-muted-foreground/60 hover:text-muted-foreground"
+                ? "bg-foreground/15 text-foreground font-bold shadow-xs ring-1 ring-border/40"
+                : "text-muted-foreground hover:text-foreground"
             )}
           >
             EN
           </span>
-          <span className="text-muted-foreground/30 text-[10px]">/</span>
+          <span className="text-muted-foreground/40 text-xs font-sans">/</span>
           <span
             className={cn(
-              "transition-colors",
+              "px-1.5 py-0.5 rounded text-xs transition-all duration-200",
               language === "zh"
-                ? "text-foreground font-bold"
-                : "text-muted-foreground/60 hover:text-muted-foreground"
+                ? "bg-foreground/15 text-foreground font-bold shadow-xs ring-1 ring-border/40"
+                : "text-muted-foreground hover:text-foreground"
             )}
           >
             中文
