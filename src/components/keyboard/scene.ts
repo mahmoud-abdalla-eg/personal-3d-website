@@ -5,6 +5,7 @@ import {
   createDocument, createMaterial, newId,
   type ChibiDocument, type ChibiMaterial, type ChibiNode, type Vec3,
 } from "@chibi3d/runtime/schema";
+import { SKILL_DESCRIPTIONS_ZH } from "@/data/translations";
 
 export type KeyboardSkill = {
   name: string;
@@ -23,6 +24,7 @@ export type KeyboardKey = {
   materialId: string;
   pressedStateId: string;
   labelId: string;
+  labelIdZh: string;
 };
 
 export type KeyboardScene = {
@@ -35,6 +37,7 @@ export type KeyboardScene = {
   frameIds: [string, string];
   labelsId: string;
   defaultLabelId: string;
+  defaultLabelIdZh: string;
   pointerTargets: string[];
   counter: CounterModel;
   counterId: string;
@@ -125,28 +128,62 @@ export function createKeyboardScene(skills: readonly KeyboardSkill[], columns = 
   const labelsId = group("Skill labels", layout, [-outerX + KIT.pitch / 2, 1.15, -outerZ - 0.7]);
   doc.nodes[labelsId].visible = false;
   const textMaterial = material("Skill text", { color: "#ffffff", roughness: 0.8 });
-  const label = (title: string, description: string) => {
-    const id = group(`Label ${title}`, labelsId);
+  const label = (title: string, description: string, tag = "") => {
+    const id = group(`Label ${title}${tag ? ` ${tag}` : ""}`, labelsId);
     doc.nodes[id].visible = false;
-    const bounds = headingBounds(title);
-    const size = Math.min(0.64, 4.8 / Math.max(bounds.width, 1));
-    add({ id: newId("nd"), name: `Heading ${title}`, type: "mesh", materialId: textMaterial,
-      geometry: { kind: "text3d", params: { text: title, size, depth: 0.1, bevel: 0.005 } },
-      transform: { ...transform([-bounds.left * size, 0, -0.65]), rotation: [-Math.PI / 2, 0, 0] },
-      visible: true, castShadow: true, receiveShadow: true, children: [] }, id);
+    const hasNonAscii = /[^\x20-\x7E]/.test(title);
+    if (!hasNonAscii) {
+      const bounds = headingBounds(title);
+      const size = Math.min(0.64, 4.8 / Math.max(bounds.width, 1));
+      add({ id: newId("nd"), name: `Heading ${title}${tag ? ` ${tag}` : ""}`, type: "mesh", materialId: textMaterial,
+        geometry: { kind: "text3d", params: { text: title, size, depth: 0.1, bevel: 0.005 } },
+        transform: { ...transform([-bounds.left * size, 0, -0.65]), rotation: [-Math.PI / 2, 0, 0] },
+        visible: true, castShadow: true, receiveShadow: true, children: [] }, id);
+    } else {
+      const headingAssetId = newId("as");
+      doc.assets[headingAssetId] = {
+        id: headingAssetId,
+        kind: "texture",
+        name: headingArtwork(title),
+        hash: `heading-${id}`,
+        size: 0,
+      };
+      const headingMaterial = material(`HeadingMat ${title}${tag ? ` ${tag}` : ""}`, {
+        color: "#ffffff",
+        roughness: 0.8,
+        transparent: true,
+        maps: { map: headingAssetId, normalMap: null, roughnessMap: null },
+      });
+      add({
+        id: newId("nd"),
+        name: `Heading ${title}${tag ? ` ${tag}` : ""}`,
+        type: "mesh",
+        materialId: headingMaterial,
+        geometry: { kind: "plane", params: { width: 4.8, height: 1.1 } },
+        transform: { ...transform([2.4, 0, -0.65]), rotation: [-Math.PI / 2, 0, 0] },
+        visible: true,
+        castShadow: false,
+        receiveShadow: false,
+        children: [],
+      }, id);
+    }
+
     const descriptionId = newId("as");
     doc.assets[descriptionId] = { id: descriptionId, kind: "texture", name: descriptionArtwork(description),
       hash: `description-${id}`, size: 0 };
-    const descriptionMaterial = material(`Description ${title}`, { color: "#ffffff", roughness: 1,
+    const descriptionMaterial = material(`Description ${title}${tag ? ` ${tag}` : ""}`, { color: "#ffffff", roughness: 1,
       transparent: true, maps: { map: descriptionId, normalMap: null, roughnessMap: null } });
-    add({ id: newId("nd"), name: `Description ${title}`, type: "mesh", materialId: descriptionMaterial,
+    add({ id: newId("nd"), name: `Description ${title}${tag ? ` ${tag}` : ""}`, type: "mesh", materialId: descriptionMaterial,
       geometry: { kind: "plane", params: { width: 4.8, height: 1.4 } },
       transform: { ...transform([2.4, 0, 0.15]), rotation: [-Math.PI / 2, 0, 0] },
       visible: true, castShadow: false, receiveShadow: false, children: [] }, id);
     return id;
   };
-  const defaultLabelId = label("Explore my skills", "Hover, tap, or press a key");
+
+  const defaultLabelId = label("Explore my skills", "Hover, tap, or press a key", "en");
+  const defaultLabelIdZh = label("探索我的技能", "悬停、点击或按下任意按键", "zh");
   doc.nodes[defaultLabelId].visible = true;
+
   const keys = skills.map((skill, index): KeyboardKey => {
     // separate groups let placement, motion, and presses compose
     const slot = group(`Slot ${skill.name}`, layout, [
@@ -175,7 +212,10 @@ export function createKeyboardScene(skills: readonly KeyboardSkill[], columns = 
     doc.states[pressedStateId] = { id: pressedStateId, nodeId, name: "Pressed", overrides: {
       [nodeId]: { "transform.position": [0, -KIT.keyHeight * 0.6, 0] },
     } };
-    return { skill, nodeId, motionId, materialId, pressedStateId, labelId: label(skill.label, skill.shortDescription) };
+    const zhDescription = SKILL_DESCRIPTIONS_ZH[skill.name] || skill.shortDescription;
+    const labelId = label(skill.label, skill.shortDescription, "en");
+    const labelIdZh = label(skill.label, zhDescription, "zh");
+    return { skill, nodeId, motionId, materialId, pressedStateId, labelId, labelIdZh };
   });
 
   // Unlit image planes preserve the original artwork under any scene lighting.
@@ -191,24 +231,85 @@ export function createKeyboardScene(skills: readonly KeyboardSkill[], columns = 
     transform: transform([0, -5.336 * 289 / 457 / 2, 0], [5.336, 5.336 * 289 / 457, 1]),
     visible: frame === 0, castShadow: false, receiveShadow: false, children: [],
   }, catId)) as [string, string];
-  return { document: doc, keys, boardId, spinId, revealId, catId, frameIds, labelsId, defaultLabelId, counter, counterId, columns: cols,
-    pointerTargets: keys.map((k) => k.nodeId) };
+  return {
+    document: doc,
+    keys,
+    boardId,
+    spinId,
+    revealId,
+    catId,
+    frameIds,
+    labelsId,
+    defaultLabelId,
+    defaultLabelIdZh,
+    counter,
+    counterId,
+    columns: cols,
+    pointerTargets: keys.map((k) => k.nodeId),
+  };
 }
 
 export const resolveKeyboardAsset = async (asset: ChibiDocument["assets"][string]): Promise<string> =>
   asset.name === "keycaps.glb" ? KEYBOARD_MODEL_URL : asset.name;
 
+function headingArtwork(text: string): string {
+  const escape = (str: string) => str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  const visualUnits = [...text].reduce((sum, ch) => sum + (ch.charCodeAt(0) > 0x2e80 ? 2 : 1), 0);
+  const size = Math.min(130, Math.floor(1800 / Math.max(visualUnits, 10)));
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="240" viewBox="0 0 1024 240"><text x="0" y="${Math.floor(size * 1.15)}" fill="white" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif" font-weight="900" font-size="${size}" text-anchor="start">${escape(text)}</text></svg>`;
+  return `data:image/svg+xml,${encodeURIComponent(svg)}`;
+}
+
 /** Rasterized by the texture loader, then rendered on a scene mesh. */
 function descriptionArtwork(text: string): string {
   const lines: string[] = [];
-  const caption = text.replace(/\p{Extended_Pictographic}|[\uFE0F\u200D]/gu, "").trim();
-  for (const word of caption.split(/\s+/)) {
-    if (!lines.length || lines[lines.length - 1].length + word.length > 28) lines.push(word);
-    else lines[lines.length - 1] += ` ${word}`;
+  const paragraphs = text.split("\n");
+  const CJK_NO_START = /^[\u3001\u3002\uff0c\uff0e\uff01\uff1f\uff1b\uff1a\u300d\u300f\u3011\uff09]/;
+
+  for (const para of paragraphs) {
+    const caption = para.replace(/\p{Extended_Pictographic}|[\uFE0F\u200D]/gu, "").trim();
+    if (!caption) continue;
+
+    // Tokens: individual CJK characters/punctuation, Latin words/numbers, or whitespace
+    const tokens = caption.match(/[\u4e00-\u9fa5\u3000-\u303f\uff00-\uffef]|[^\s\u4e00-\u9fa5\u3000-\u303f\uff00-\uffef]+|\s+/gu) || [];
+    let currentLine = "";
+    let currentUnits = 0;
+    const maxUnits = 26;
+
+    for (const token of tokens) {
+      if (/^\s+$/.test(token)) {
+        if (currentLine) {
+          currentLine += " ";
+          currentUnits += 1;
+        }
+        continue;
+      }
+
+      let tokenUnits = 0;
+      for (const ch of token) {
+        tokenUnits += ch.charCodeAt(0) > 0x2e80 ? 2 : 1;
+      }
+
+      const isNoStart = CJK_NO_START.test(token);
+      if (currentUnits + tokenUnits > maxUnits && currentLine.trim().length > 0 && !isNoStart) {
+        lines.push(currentLine.trim());
+        currentLine = token;
+        currentUnits = tokenUnits;
+      } else {
+        currentLine += token;
+        currentUnits += tokenUnits;
+      }
+    }
+    if (currentLine.trim().length > 0) {
+      lines.push(currentLine.trim());
+    }
   }
+
+  if (lines.length === 0) lines.push("");
+
   const escape = (line: string) => line.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
-  const size = Math.min(68, 250 / Math.max(lines.length, 1));
-  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="300" viewBox="0 0 1024 300"><g fill="white" font-family="Arial, sans-serif" font-size="${size}" text-anchor="start">${lines.map((line, index) => `<text x="0" y="${78 + index * size * 1.2}">${escape(line)}</text>`).join("")}</g></svg>`;
+  const size = Math.min(68, Math.floor(250 / Math.max(lines.length, 1)));
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="300" viewBox="0 0 1024 300"><g fill="white" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif" font-size="${size}" text-anchor="start">${lines.map((line, index) => `<text x="0" y="${78 + index * size * 1.2}">${escape(line)}</text>`).join("")}</g></svg>`;
   return `data:image/svg+xml,${encodeURIComponent(svg)}`;
 }
 

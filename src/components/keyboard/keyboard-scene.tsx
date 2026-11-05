@@ -50,19 +50,31 @@ export default function KeyboardScene({ maxDpr }: { maxDpr: number }) {
   }), [scene, shadows, softShadows, ao, bloom, lighting]);
   const dpr = useMemo<[number, number]>(() =>
     [0.5, Math.min(graphics.dpr, maxDpr)], [maxDpr, graphics.dpr]);
-  const visibleLabel = useRef<string | null>(null);
+
+  const isChineseRef = useRef(isChinese);
+  isChineseRef.current = isChinese;
+
+  const getTargetLabelId = useCallback((key: KeyboardKey | null, zh: boolean) => {
+    if (key) return zh ? key.labelIdZh : key.labelId;
+    return zh ? scene.defaultLabelIdZh : scene.defaultLabelId;
+  }, [scene]);
+
+  const activeLabelNodeId = useRef<string>(isChinese ? scene.defaultLabelIdZh : scene.defaultLabelId);
   const heldKeys = useRef<KeyboardKey[]>([]);
   const input = useMemo(() => createKeyInput(scene.keys, scene.columns), [scene]);
   const { counts, total, available, recordPress } = useKeyboardCounts();
+
   useEffect(() => {
     if (!ready || !api.current) return;
     const controller = createCounterMotion(api.current, scene.counter, markActive);
     counterMotion.current = controller;
     return () => { controller.dispose(); counterMotion.current = null; };
   }, [ready, loadVersion, scene, markActive]);
+
   useEffect(() => {
     counterMotion.current?.update(total, available);
   }, [total, available, ready, loadVersion, scene]);
+
   useEffect(() => {
     if (!ready) return;
     for (const key of scene.keys) {
@@ -70,6 +82,7 @@ export default function KeyboardScene({ maxDpr }: { maxDpr: number }) {
     }
     markActive();
   }, [counts, ready, loadVersion, scene, markActive]);
+
   useEffect(() => input.subscribe((key, pressed) => {
     markActive();
     api.current?.transitionNodeTo(key.nodeId, pressed ? key.pressedStateId : "base", { duration: 0.1, ease: "easeInOut" });
@@ -84,15 +97,17 @@ export default function KeyboardScene({ maxDpr }: { maxDpr: number }) {
     }
     // latest still-held key wins; none held -> back to default prompt
     const shown = heldKeys.current.at(-1) ?? null;
-    const labelId = shown?.labelId ?? scene.defaultLabelId;
-    if (labelId !== (visibleLabel.current ?? scene.defaultLabelId)) {
-      api.current?.setNodeVisible(visibleLabel.current ?? scene.defaultLabelId, false);
-      api.current?.setNodeVisible(labelId, true);
+    const targetLabelId = getTargetLabelId(shown, isChineseRef.current);
+    if (targetLabelId !== activeLabelNodeId.current) {
+      if (activeLabelNodeId.current) {
+        api.current?.setNodeVisible(activeLabelNodeId.current, false);
+      }
+      api.current?.setNodeVisible(targetLabelId, true);
+      activeLabelNodeId.current = targetLabelId;
     }
-    visibleLabel.current = shown?.labelId ?? null;
     setSelected(shown?.skill ?? null);
     playSound(pressed);
-  }), [input, scene, playSound, markActive, ready, isLoading, recordPress]);
+  }), [input, scene, playSound, markActive, ready, isLoading, recordPress, getTargetLabelId]);
 
   const onPointerEvent = useCallback((event: ScenePointerEvent) => {
     const pointer = `pointer:${event.pointerId}`;
@@ -106,18 +121,21 @@ export default function KeyboardScene({ maxDpr }: { maxDpr: number }) {
       case "pointerCancel": input.release(pointer); break;
     }
   }, [input]);
+
   const onLoad = useCallback(() => {
     if (failed.current) return;
     setLoadVersion((version) => version + 1);
     setSceneStatus("ready");
     bypassLoading();
   }, [bypassLoading]);
+
   const onError = useCallback((error: Error) => {
     failed.current = true;
     console.warn("Keyboard scene unavailable", error);
     setSceneStatus("failed");
     bypassLoading();
   }, [bypassLoading]);
+
   const onEvent = useCallback((event: RuntimeEvent) => {
     if (event.type === "contextLost") onError(new Error("WebGL context lost"));
   }, [onError]);
@@ -133,22 +151,31 @@ export default function KeyboardScene({ maxDpr }: { maxDpr: number }) {
     motion.current = controller;
     return () => { controller.dispose(); motion.current = null; };
   }, [ready, loadVersion, scene, input, markActive]);
+
   useEffect(() => {
     motion.current?.setCounterEnabled(available);
   }, [available, ready, loadVersion, scene, input, markActive]);
+
   // Rebind after each runtime load, once the replacement scene's nodes are mounted.
   useEffect(() => {
     if (ready && !isLoading) motion.current?.reveal();
   }, [ready, loadVersion, isLoading, scene, input]);
 
+  // Restore/switch the selected label if language changes, or runtime remounts.
   useEffect(() => {
-    if (!ready) return;
-    // Restore the selected label if the runtime remounts.
-    const active = visibleLabel.current ?? scene.defaultLabelId;
-    for (const id of [scene.defaultLabelId, ...scene.keys.map((key) => key.labelId)]) {
-      api.current?.setNodeVisible(id, id === active);
+    if (!ready || !api.current) return;
+    const shown = heldKeys.current.at(-1) ?? null;
+    const targetLabelId = getTargetLabelId(shown, isChinese);
+    const allLabelIds = [
+      scene.defaultLabelId,
+      scene.defaultLabelIdZh,
+      ...scene.keys.flatMap((k) => [k.labelId, k.labelIdZh]),
+    ];
+    for (const id of allLabelIds) {
+      api.current.setNodeVisible(id, id === targetLabelId);
     }
-  }, [ready, loadVersion, scene]);
+    activeLabelNodeId.current = targetLabelId;
+  }, [ready, loadVersion, isChinese, scene, getTargetLabelId]);
 
   useEffect(() => {
     const down = (event: KeyboardEvent) => {
