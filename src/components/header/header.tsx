@@ -12,6 +12,8 @@ import { Button } from "../ui/button";
 import { config } from "@/data/config";
 import OnlineUsers from "../realtime/online-users";
 import { GameTrigger } from "../game/game-trigger";
+import LanguageToggle from "../language-toggle";
+import { useLanguage } from "@/contexts/i18n-context";
 
 interface HeaderProps {
   loader?: boolean;
@@ -22,6 +24,7 @@ interface HeaderProps {
 const Header = ({ loader, githubStars }: HeaderProps) => {
   const [isActive, setIsActive] = useState<boolean>(false);
   const isHome = usePathname() === "/";
+  const { t } = useLanguage();
   return (
     <motion.header
       className={cn(
@@ -58,6 +61,7 @@ const Header = ({ loader, githubStars }: HeaderProps) => {
           </Button>
         </Link>
 
+        <LanguageToggle className="mr-3" />
         <FunnyThemeToggle className="w-6 h-6 mr-4 hidden md:flex" />
         {isHome && process.env.NEXT_PUBLIC_WS_URL && (
           <div className="flex items-center">
@@ -81,10 +85,10 @@ const Header = ({ loader, githubStars }: HeaderProps) => {
               variants={opacity}
               animate={!isActive ? "open" : "closed"}
             >
-              Menu
+              {t("nav.menu", "Menu")}
             </motion.p>
             <motion.p variants={opacity} animate={isActive ? "open" : "closed"}>
-              Close
+              {t("nav.close", "Close")}
             </motion.p>
           </div>
           <div

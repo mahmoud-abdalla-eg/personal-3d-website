@@ -7,9 +7,17 @@ export async function getGithubStars(): Promise<number | null> {
   cacheLife({ stale: 300, revalidate: 300 });
 
   try {
+    const headers: Record<string, string> = {
+      Accept: "application/vnd.github+json",
+      "User-Agent": "portfolio-stars-fetcher",
+    };
+    if (process.env.GITHUB_TOKEN) {
+      headers.Authorization = `Bearer ${process.env.GITHUB_TOKEN}`;
+    }
+
     const res = await fetch(
       `https://api.github.com/repos/${config.githubUsername}/${config.githubRepo}`,
-      { headers: { Accept: "application/vnd.github+json" } },
+      { headers },
     );
     if (!res.ok) {
       return null;

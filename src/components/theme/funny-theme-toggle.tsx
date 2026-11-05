@@ -7,6 +7,8 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { useToast } from "../ui/use-toast";
 import { themeDisclaimers } from "@/data/constants";
+import { THEME_DISCLAIMERS_ZH } from "@/data/translations";
+import { useLanguage } from "@/contexts/i18n-context";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 
 export default function FunnyThemeToggle({
@@ -15,6 +17,7 @@ export default function FunnyThemeToggle({
   className?: string;
 }) {
   const { setTheme, theme } = useTheme();
+  const { isChinese } = useLanguage();
   const [counter, setCounter] = React.useState({ dark: 0, light: 0 });
   const { toast } = useToast();
   const ref = React.useRef<HTMLButtonElement>(null);
@@ -65,8 +68,9 @@ export default function FunnyThemeToggle({
   };
 
   const goDark = (e: React.MouseEvent) => {
-    const description =
-      themeDisclaimers.dark[counter.dark % themeDisclaimers.dark.length];
+    const list = isChinese ? THEME_DISCLAIMERS_ZH.dark : themeDisclaimers.dark;
+    const description = list[counter.dark % list.length];
+
     setCounter({ ...counter, dark: counter.dark + 1 });
     toast({
       description: description,
@@ -105,9 +109,9 @@ export default function FunnyThemeToggle({
           <PopoverContent className="z-[99999] flex flex-col items-center gap-2">
             {/* <p className="text-sm">these stunts are done by professional only</p> */}
             <p className="text-sm text-center">
-              {themeDisclaimers.light[counter.light]}
+              {(isChinese ? THEME_DISCLAIMERS_ZH.light : themeDisclaimers.light)[counter.light % (isChinese ? THEME_DISCLAIMERS_ZH.light.length : themeDisclaimers.light.length)]}
             </p>
-            <Button onClick={goLight}>Go Light</Button>
+            <Button onClick={goLight}>{isChinese ? "开启浅色模式" : "Go Light"}</Button>
           </PopoverContent>
         </Popover>
       )}

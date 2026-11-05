@@ -51,7 +51,7 @@ const config: Config = {
   site: "https://mahmoudabdalla.vercel.app",
 
   // for github stars button
-  githubUsername: "MahmoudAhmed995",
+  githubUsername: "mahmoud-abdalla-eg",
   githubRepo: "personal-3d-website",
 
   get ogImg() {
@@ -59,7 +59,7 @@ const config: Config = {
   },
   social: {
     linkedin: "https://www.linkedin.com/in/mahmoud-abdalla-eg/",
-    github: "https://github.com/MahmoudAhmed995",
+    github: "https://github.com/mahmoud-abdalla-eg",
   },
 };
 export { config };

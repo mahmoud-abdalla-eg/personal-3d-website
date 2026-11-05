@@ -13,6 +13,8 @@ import { useAdaptiveGraphics } from "./use-adaptive-graphics";
 import { useKeyboardCounts } from "./use-keyboard-counts";
 import { keyWear } from "./wear";
 import { createCounterMotion } from "./counter-motion";
+import { useLanguage } from "@/contexts/i18n-context";
+import { SKILL_DESCRIPTIONS_ZH } from "@/data/translations";
 
 const SceneCanvas = memo(ChibiScene);
 const SCENE_STYLE: CSSProperties = {
@@ -24,6 +26,7 @@ const SCENE_STYLE: CSSProperties = {
 
 export default function KeyboardScene({ maxDpr }: { maxDpr: number }) {
   const { isLoading, bypassLoading } = usePreloader();
+  const { isChinese, t } = useLanguage();
   const api = useRef<ChibiSceneApi>(null);
   const failed = useRef(false);
   const motion = useRef<ReturnType<typeof createKeyboardMotion> | null>(null);

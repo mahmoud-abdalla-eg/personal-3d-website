@@ -7,6 +7,8 @@ import { cn } from "@/lib/utils";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import FunnyThemeToggle from "@/components/theme/funny-theme-toggle";
+import LanguageToggle from "@/components/language-toggle";
+import { useLanguage } from "@/contexts/i18n-context";
 
 interface SelectedLink {
   isActive: boolean;
@@ -26,6 +28,7 @@ export default function Body({
   setSelectedLink,
   setIsActive,
 }: BodyProps) {
+  const { t } = useLanguage();
   const params = useParams();
   const [currentHref, setCurrentHref] = useState("/");
   useEffect(() => {
@@ -56,7 +59,10 @@ export default function Body({
 
   return (
     <div className={cn(styles.body, "flex flex-col items-end md:flex-row")}>
-      <FunnyThemeToggle className="w-6 h-6 mr-6 flex md:hidden" />
+      <div className="flex items-center gap-3 mr-6 md:hidden">
+        <LanguageToggle />
+        <FunnyThemeToggle className="w-6 h-6 flex" />
+      </div>
       {links.map((link, index) => {
         const { title, href, target } = link;
 
@@ -82,7 +88,7 @@ export default function Body({
                   : "closed"
               }
             >
-              {getChars(title)}
+              {getChars(t("nav." + title.toLowerCase(), title))}
             </motion.p>
           </Link>
         );

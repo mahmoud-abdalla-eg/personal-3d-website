@@ -8,6 +8,7 @@ import { SKILLS } from "@/data/constants";
 import { usePerfProfile } from "@/hooks/use-perf-profile";
 import { cn } from "@/lib/utils";
 import { useSceneStatus } from "@/lib/scene-health";
+import { useLanguage } from "@/contexts/i18n-context";
 
 /**
  * Skills are visible HTML until the keyboard scene is ready, and remain
@@ -16,6 +17,7 @@ import { useSceneStatus } from "@/lib/scene-health";
  */
 const SkillsSection = () => {
   const { disable3D, ready } = usePerfProfile();
+  const { t } = useLanguage();
   const sceneStatus = useSceneStatus();
   const showGrid = !ready || disable3D || sceneStatus !== "ready";
 
@@ -33,8 +35,8 @@ const SkillsSection = () => {
     >
       <SectionHeader
         id="skills"
-        title="Tech Stack"
-        desc={showGrid ? "Tools I build with" : "(hint: press a key)"}
+        title={t("skills.title", "Tech Stack")}
+        desc={showGrid ? t("skills.subtitleShow", "Tools I build with") : t("skills.subtitleHint", "(hint: press a key)")}
         className={showGrid ? "static mb-14" : undefined}
       />
       <ul className={showGrid ? "mx-auto grid w-full max-w-5xl grid-cols-2 gap-3 px-4 sm:grid-cols-3 sm:gap-4 md:grid-cols-4 lg:grid-cols-5" : "sr-only"}>

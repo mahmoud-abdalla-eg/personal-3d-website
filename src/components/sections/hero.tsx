@@ -14,11 +14,13 @@ import ScrollDownIcon from "../scroll-down-icon";
 import { SiGithub, SiX } from "react-icons/si";
 import { FaLinkedin } from "react-icons/fa6";
 import { config } from "@/data/config";
+import { useLanguage } from "@/contexts/i18n-context";
 
 import SectionWrapper from "../ui/section-wrapper";
 
 const HeroSection = () => {
   const { isLoading } = usePreloader();
+  const { t } = useLanguage();
 
   return (
     <SectionWrapper id="hero" className={cn("relative w-full h-screen")}>
@@ -41,7 +43,7 @@ const HeroSection = () => {
                       "cursor-default sm:text-xl md:text-xl whitespace-nowrap bg-clip-text "
                     )}
                   >
-                    Hi, I am
+                    {t("hero.greeting", "Hi, I am")}
                     <br className="md:hidden" />
                   </p>
                 </BlurIn>
@@ -65,7 +67,7 @@ const HeroSection = () => {
                       side="top"
                       className="dark:bg-white dark:text-black"
                     >
-                      theres something waiting for you in devtools
+                      {t("hero.devtoolsTip", "theres something waiting for you in devtools")}
                     </TooltipContent>
                   </Tooltip>
                 </BlurIn>
@@ -77,7 +79,7 @@ const HeroSection = () => {
                       "cursor-default sm:text-xl md:text-xl whitespace-nowrap bg-clip-text "
                     )}
                   >
-                    A Full Stack Web Developer
+                    {t("hero.role", "A Full Stack Web Developer")}
                   </p>
                 </BlurIn>
               </div>
@@ -92,7 +94,7 @@ const HeroSection = () => {
                   <BoxReveal delay={2} width="100%" >
                     <Button className="flex items-center gap-2 w-full">
                       <File size={24} />
-                      <p>Resume</p>
+                      <p>{t("hero.resumeBtn", "Resume")}</p>
                     </Button>
                   </BoxReveal>
                 </Link>
@@ -104,12 +106,12 @@ const HeroSection = () => {
                           variant={"outline"}
                           className="block w-full overflow-hidden"
                         >
-                          Hire Me
+                          {t("hero.hireBtn", "Hire Me")}
                         </Button>
                       </Link>
                     </TooltipTrigger>
                     <TooltipContent side="bottom">
-                      <p>pls 🥹 🙏</p>
+                      <p>{t("hero.hireTip", "pls 🥹 🙏")}</p>
                     </TooltipContent>
                   </Tooltip>
                   <div className="flex items-center h-full gap-2">
