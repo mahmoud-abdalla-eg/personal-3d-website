@@ -76,10 +76,12 @@ const ContactForm = () => {
         router.push("/");
         clearTimeout(timer);
       }, 1000);
-    } catch (err) {
+    } catch (err: unknown) {
+      const errorMessage =
+        err instanceof Error ? err.message : t("contact.toastErrorDesc", "Something went wrong! Please try again.");
       toast({
         title: t("contact.toastErrorTitle", "Error"),
-        description: t("contact.toastErrorDesc", "Something went wrong! Please try again."),
+        description: errorMessage,
         className: cn(
           "top-0 w-full flex justify-center fixed md:max-w-7xl md:top-4 md:right-4"
         ),

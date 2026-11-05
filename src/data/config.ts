@@ -54,7 +54,7 @@ const config: Config = {
     "Framer Motion",
   ],
   author: "Mahmoud Abdalla",
-  email: "Mahmouddesign01@gmail.com",
+  email: "mahmouddesign01@gmail.com",
   site: "https://mahmoudabdalla.vercel.app",
 
   // for github stars button
