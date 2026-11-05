@@ -7,14 +7,12 @@
 
 A developer portfolio you can actually play with. Press keys on a 3D keyboard, watch other visitors' cursors fly by, and chat with whoever's online.
 
-### [✨ Live Demo → MahmoudAbdalla.dev](https://MahmoudAbdalla.dev)
+<!-- ### [✨ Live Demo → MahmoudAbdalla.dev](https://MahmoudAbdalla.dev) -->
 
-[![GitHub stars](https://img.shields.io/github/stars/mahmoud-abdalla-eg/personal-3d-website?style=flat&logo=github)](https://github.com/mahmoud-abdalla-eg/personal-3d-website/stargazers)
-[![Forks](https://img.shields.io/github/forks/mahmoud-abdalla-eg/personal-3d-website?style=flat&logo=github)](https://github.com/mahmoud-abdalla-eg/personal-3d-website/network/members)
+[![GitHub stars](https://img.shields.io/github/stars/MahmoudAhmed995/personal-3d-website?style=flat&logo=github)](https://github.com/MahmoudAhmed995/personal-3d-website/stargazers)
+[![Forks](https://img.shields.io/github/forks/MahmoudAhmed995/personal-3d-website?style=flat&logo=github)](https://github.com/MahmoudAhmed995/personal-3d-website/network/members)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![Next.js 16](https://img.shields.io/badge/Next.js-16-black?logo=next.js)](https://nextjs.org)
-
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/mahmoud-abdalla-eg/personal-3d-website)
 
 <!-- swap for demo video: drag an .mp4 into the GitHub web editor, paste the user-attachments URL on its own line here -->
 ![Portfolio Preview](public/assets/projects-screenshots/portfolio/landing.png)
@@ -30,39 +28,9 @@ A developer portfolio you can actually play with. Press keys on a 3D keyboard, w
 - 💻 **Specialization:** Full-Stack Web Development, REST APIs, SSO Integration, UI/UX Design, and AI-assisted Engineering
 - 🌐 **Portfolio Website:** [https://MahmoudAbdalla.dev](https://MahmoudAbdalla.dev)
 - 📧 **Email:** [Mahmouddesign01@gmail.com](mailto:Mahmouddesign01@gmail.com)
-- 🐙 **GitHub:** [@mahmoud-abdalla-eg](https://github.com/mahmoud-abdalla-eg)
+- 🐙 **GitHub:** [@MahmoudAhmed995](https://github.com/MahmoudAhmed995)
 - 💼 **LinkedIn:** [mahmoud-abdalla-eg](https://www.linkedin.com/in/mahmoud-abdalla-eg/)
 - 💬 **WeChat ID:** Mahmoud-Ahmed995
-
----
-
-## 💼 Experience
-
-### 1. **Coremail** — Software Development Intern
-*Aug 2026 – Present | Panyu, Guangzhou, Guangdong, China*
-- Diagnose and resolve bugs across front-end and back-end web applications using structured problem-solving.
-- Implement and troubleshoot SSO integrations and REST API integrations between systems and services.
-- Contribute to user interface development, software design, usability improvements, and full-stack web development.
-- Support Artificial Intelligence, automation, and technical data analysis for ongoing product and engineering work.
-- **Tech Stack:** React.js, Node.js, TypeScript, JavaScript, Git, AI / Claude
-
-### 2. **UR Clothing Brand** — Graphic Designer, Web Developer & Product Manager
-*Dec 2023 – Dec 2024 | 6 of October, Egypt*
-- Developed the brand identity, including logo, packaging, and marketing assets, increasing brand recognition by 20% across social media platforms.
-- Built a multi-category e-commerce website with advanced filtering to improve product browsing and discovery.
-- **Tech Stack:** React.js, Tailwind CSS, Node.js, MongoDB, JavaScript, Git
-
-### 3. **Sleep High Branch** — Graphic Designer & Digital Marketer
-*Aug 2023 – Aug 2026 | 6 of October, Egypt*
-- Created graphic content for 10+ digital campaigns, increasing brand visibility by 20% within 3 months.
-- Managed social media campaigns and analyzed performance data to optimize ROI, increasing audience engagement by 30%.
-- **Tech Stack:** UI/UX, Graphic Design, Tailwind CSS, JavaScript
-
-### 4. **Freelance** — Freelance Graphic Designer & Web Designer
-*Nov 2022 – Jun 2025 | Egypt*
-- Designed branding and digital marketing materials for multiple freelance clients, including logos, brochures, and social media graphics.
-- Delivered customized visual identity designs and responsive digital assets meeting client specifications.
-- **Tech Stack:** JavaScript, Tailwind CSS, Git
 
 ---
 
@@ -95,22 +63,22 @@ A developer portfolio you can actually play with. Press keys on a 3D keyboard, w
 
 ### Prerequisites
 
-- Node.js 20.9+ for Next.js 16; use a current LTS release with pnpm 11
-- pnpm 11.20.0
+- Node.js 20.9+ for Next.js 16
+- npm 10+ (included with Node.js LTS)
 
 ### Installation
 
 1. **Clone the repository:**
 
     ```bash
-    git clone https://github.com/mahmoud-abdalla-eg/personal-3d-website.git
+    git clone https://github.com/MahmoudAhmed995/personal-3d-website.git
     cd personal-3d-website
     ```
 
 2. **Install dependencies:**
 
     ```bash
-    pnpm install
+    npm install
     ```
 
 3. **Set up environment variables:**
@@ -131,7 +99,7 @@ A developer portfolio you can actually play with. Press keys on a 3D keyboard, w
 4. **Run the development server:**
 
     ```bash
-    pnpm dev
+    npm run dev
     ```
 
 5. Open [http://localhost:3000](http://localhost:3000) and see the magic ✨
@@ -143,8 +111,8 @@ A developer portfolio you can actually play with. Press keys on a 3D keyboard, w
 Run these before opening a pull request:
 
 ```bash
-pnpm lint
-pnpm typecheck
+npm run lint
+npm run typecheck
 ```
 
 Next.js 16 no longer runs lint during builds. The ESLint CLI uses `eslint.config.mjs`. New React Compiler diagnostics for refs, immutability, effect state updates, and manual memoization report warnings while existing animation and realtime components are migrated. Hook ordering violations remain errors.
@@ -157,44 +125,30 @@ Files under `public/assets` can be replaced at the same URL and cache for one ho
 
 ## 🎨 Personal Configuration
 
-All personal info is centralized in [`src/data/config.ts`](src/data/config.ts):
+All personal info is centralized in [`src/data/config.ts`](src/data/config.ts). Edit this file to customize your info:
 
 ```ts
 const config: Config = {
-  title: "Mahmoud Abdalla | Full-Stack Developer",
+  title: "Your Name | Your Title",
   description: {
-    long: "Explore the portfolio of Mahmoud, a full-stack developer and creative technologist specializing in interactive web experiences, 3D animations, and modern web applications. Let's build something amazing together!",
-    short:
-      "Discover the portfolio of Mahmoud, a full-stack developer creating interactive web experiences and innovative projects.",
+    long: "Your long description for SEO...",
+    short: "Your short description...",
   },
-  keywords: [
-    "Mahmoud",
-    "Mahmoud Abdalla",
-    "portfolio",
-    "full-stack developer",
-    "creative technologist",
-    "web development",
-    "3D animations",
-    "interactive websites",
-    "web design",
-    "GSAP",
-    "React",
-    "Next.js",
-    "TypeScript",
-    "Three.js",
-    "Framer Motion",
-  ],
-  author: "Mahmoud Abdalla",
-  email: "Mahmouddesign01@gmail.com",
-  site: "https://MahmoudAbdalla.dev",
+  keywords: ["your", "keywords"],
+  author: "Your Name",
+  email: "you@example.com",
+  site: "https://yoursite.com",
 
   // for github stars button
-  githubUsername: "mahmoud-abdalla-eg",
-  githubRepo: "personal-3d-website",
+  githubUsername: "your-github-username",
+  githubRepo: "your-repo-name",
 
   social: {
-    linkedin: "https://www.linkedin.com/in/mahmoud-abdalla-eg/",
-    github: "https://github.com/mahmoud-abdalla-eg",
+    twitter: "https://x.com/you",
+    linkedin: "https://linkedin.com/in/you",
+    instagram: "https://instagram.com/you",
+    facebook: "https://facebook.com/you",
+    github: "https://github.com/you",
   },
 };
 ```
@@ -237,23 +191,10 @@ These features activate automatically when the `NEXT_PUBLIC_WS_URL` environment 
 
 ---
 
-## 🚀 Deployment
-
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/mahmoud-abdalla-eg/personal-3d-website)
-
-This site is deployed on **Vercel**. To deploy your own:
-
-1. Push your code to a GitHub repository
-2. Connect the repository to [Vercel](https://vercel.com)
-3. Add your environment variables in the Vercel dashboard
-4. Vercel handles the rest — automatic deployments on every push
-
----
-
 ## 🤝 Credits & Acknowledgements
 
-- Built upon the open-source 3D interactive portfolio architecture created by [Naresh Khatri](https://github.com/Naresh-Khatri/3d-portfolio).
-- Rebranded and maintained by **[Mahmoud Abdalla](https://github.com/mahmoud-abdalla-eg)**.
+- Built using the open-source 3D interactive portfolio template created by [Naresh Khatri](https://github.com/Naresh-Khatri/3d-portfolio).
+- Customized and maintained by **[Mahmoud Abdalla](https://github.com/MahmoudAhmed995)**.
 
 ---
 
