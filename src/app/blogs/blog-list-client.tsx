@@ -5,6 +5,7 @@ import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 import { CalendarDays, ArrowUpRight, Clock } from "lucide-react";
 import { motion } from "motion/react";
+import { useLanguage } from "@/contexts/i18n-context";
 
 type Post = {
   slug: string;
@@ -23,16 +24,17 @@ function readTime(wordCount: number) {
   return Math.max(1, Math.ceil(wordCount / 200));
 }
 
-function formatDate(dateStr: string) {
+function formatDate(dateStr: string, isChinese: boolean) {
   const date = new Date(dateStr);
-  return date.toLocaleDateString("en-US", {
-    month: "short",
+  return date.toLocaleDateString(isChinese ? "zh-CN" : "en-US", {
+    month: isChinese ? "long" : "short",
     day: "numeric",
     year: "numeric",
   });
 }
 
 export default function BlogListClient({ posts }: { posts: Post[] }) {
+  const { isChinese, t } = useLanguage();
   const featured = posts[0];
   const rest = posts.slice(1);
 
@@ -55,15 +57,15 @@ export default function BlogListClient({ posts }: { posts: Post[] }) {
           <div className="flex items-center gap-3 mb-6">
             <div className="h-px flex-1 max-w-[60px] bg-[hsl(20,100%,70%)]" />
             <span className="text-[hsl(20,100%,70%)] text-sm font-medium tracking-[0.2em] uppercase font-sans">
-              Blog
+              {t("blogs.badge", "Blog")}
             </span>
           </div>
           <h1 className="font-display text-3xl md:text-5xl leading-[0.95] tracking-tight">
-            Thoughts &<br />
-            <span className="text-[hsl(20,100%,70%)]">Dispatches</span>
+            {t("blogs.title1", "Thoughts &")}<br />
+            <span className="text-[hsl(20,100%,70%)]">{t("blogs.title2", "Dispatches")}</span>
           </h1>
           <p className="mt-6 text-muted-foreground text-lg max-w-lg leading-relaxed font-sans">
-            Notes on building things, breaking things, and occasionally writing about it.
+            {t("blogs.subtitle", "Notes on building things, breaking things, and occasionally writing about it.")}
           </p>
         </motion.div>
 
@@ -83,16 +85,16 @@ export default function BlogListClient({ posts }: { posts: Post[] }) {
                 <div className="relative">
                   <div className="flex items-center gap-4 mb-6 text-sm text-muted-foreground font-sans">
                     <span className="text-[hsl(20,100%,70%)] font-medium tracking-[0.15em] uppercase text-xs">
-                      Featured
+                      {t("blogs.featured", "Featured")}
                     </span>
                     <span className="h-1 w-1 rounded-full bg-muted-foreground/50" />
                     <span className="flex items-center gap-1.5">
                       <CalendarDays className="w-3.5 h-3.5" />
-                      {formatDate(featured.metadata.publishedAt)}
+                      {formatDate(featured.metadata.publishedAt, isChinese)}
                     </span>
                     <span className="flex items-center gap-1.5">
                       <Clock className="w-3.5 h-3.5" />
-                      {readTime(featured.wordCount)} min read
+                      {readTime(featured.wordCount)} {t("blogs.minRead", "min read")}
                     </span>
                   </div>
 
@@ -117,7 +119,7 @@ export default function BlogListClient({ posts }: { posts: Post[] }) {
                       ))}
                     </div>
                     <div className="flex items-center gap-2 text-sm text-muted-foreground group-hover:text-[hsl(20,100%,70%)] transition-colors font-sans">
-                      Read article
+                      {t("blogs.readArticle", "Read article")}
                       <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
                     </div>
                   </div>
@@ -155,12 +157,12 @@ export default function BlogListClient({ posts }: { posts: Post[] }) {
                   <div className="flex items-center gap-3 mb-4 text-xs text-muted-foreground font-sans">
                     <span className="flex items-center gap-1.5">
                       <CalendarDays className="w-3 h-3" />
-                      {formatDate(post.metadata.publishedAt)}
+                      {formatDate(post.metadata.publishedAt, isChinese)}
                     </span>
                     <span className="h-1 w-1 rounded-full bg-muted-foreground/50" />
                     <span className="flex items-center gap-1.5">
                       <Clock className="w-3 h-3" />
-                      {readTime(post.wordCount)} min
+                      {readTime(post.wordCount)} {t("blogs.min", "min")}
                     </span>
                   </div>
 
@@ -200,7 +202,9 @@ export default function BlogListClient({ posts }: { posts: Post[] }) {
             transition={{ delay: 0.3 }}
             className="text-center py-24"
           >
-            <p className="text-muted-foreground text-lg font-sans">No posts yet. Check back soon.</p>
+            <p className="text-muted-foreground text-lg font-sans">
+              {t("blogs.noPosts", "No posts yet. Check back soon.")}
+            </p>
           </motion.div>
         )}
       </div>

@@ -9,14 +9,15 @@ import { useToast } from "./ui/use-toast";
 import { Button } from "./ui/button";
 import { useRouter } from "next/navigation";
 import { z } from "zod";
+import { useLanguage } from "@/contexts/i18n-context";
 
 const formSchema = z.object({
-  fullName: z.string().min(2, "Full name must be at least 2 characters"),
-  email: z.string().email("Please enter a valid email address"),
-  message: z.string().min(10, "Message must be at least 10 characters"),
+  fullName: z.string().min(2),
+  email: z.string().email(),
+  message: z.string().min(10),
 });
 
-type FieldErrors = Partial<Record<keyof z.infer<typeof formSchema>, string>>;
+type FieldErrors = Partial<Record<"fullName" | "email" | "message", string>>;
 
 const ContactForm = () => {
   const [fullName, setFullName] = React.useState("");
@@ -27,6 +28,7 @@ const ContactForm = () => {
 
   const { toast } = useToast();
   const router = useRouter();
+  const { t } = useLanguage();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -36,8 +38,14 @@ const ContactForm = () => {
     if (!result.success) {
       const fieldErrors: FieldErrors = {};
       result.error.issues.forEach((issue) => {
-        const field = issue.path[0] as keyof FieldErrors;
-        if (!fieldErrors[field]) fieldErrors[field] = issue.message;
+        const field = issue.path[0];
+        if (field === "fullName" && !fieldErrors.fullName) {
+          fieldErrors.fullName = t("contact.errName", "Full name must be at least 2 characters");
+        } else if (field === "email" && !fieldErrors.email) {
+          fieldErrors.email = t("contact.errEmail", "Please enter a valid email address");
+        } else if (field === "message" && !fieldErrors.message) {
+          fieldErrors.message = t("contact.errMessage", "Message must be at least 10 characters");
+        }
       });
       setErrors(fieldErrors);
       return;
@@ -55,8 +63,8 @@ const ContactForm = () => {
         throw new Error(data.error || `Request failed (${res.status})`);
       }
       toast({
-        title: "Thank you!",
-        description: "I'll get back to you as soon as possible.",
+        title: t("contact.toastSuccessTitle", "Thank you!"),
+        description: t("contact.toastSuccessDesc", "I'll get back to you as soon as possible."),
         variant: "default",
         className: cn("top-0 mx-auto flex fixed md:top-4 md:right-4"),
       });
@@ -70,8 +78,8 @@ const ContactForm = () => {
       }, 1000);
     } catch (err) {
       toast({
-        title: "Error",
-        description: "Something went wrong! Please try again.",
+        title: t("contact.toastErrorTitle", "Error"),
+        description: t("contact.toastErrorDesc", "Something went wrong! Please try again."),
         className: cn(
           "top-0 w-full flex justify-center fixed md:max-w-7xl md:top-4 md:right-4"
         ),
@@ -80,43 +88,53 @@ const ContactForm = () => {
     }
     setLoading(false);
   };
+
   return (
     <form className="min-w-7xl mx-auto sm:mt-4" onSubmit={handleSubmit} aria-busy={loading}>
       <div className="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-2 mb-4">
         <LabelInputContainer>
-          <Label htmlFor="fullname">Full name</Label>
+          <Label htmlFor="fullname">{t("contact.fullName", "Full name")}</Label>
           <Input
             id="fullname"
-            placeholder="Your Name"
+            placeholder={t("contact.fullNamePlaceholder", "Your Name")}
             type="text"
             value={fullName}
-            onChange={(e) => { setFullName(e.target.value); setErrors((p) => ({ ...p, fullName: undefined })); }}
+            onChange={(e) => {
+              setFullName(e.target.value);
+              setErrors((p) => ({ ...p, fullName: undefined }));
+            }}
           />
           {errors.fullName && <p className="text-sm text-red-500">{errors.fullName}</p>}
         </LabelInputContainer>
         <LabelInputContainer className="mb-4">
-          <Label htmlFor="email">Email Address</Label>
+          <Label htmlFor="email">{t("contact.email", "Email Address")}</Label>
           <Input
             id="email"
-            placeholder="you@example.com"
+            placeholder={t("contact.emailPlaceholder", "you@example.com")}
             type="email"
             value={email}
-            onChange={(e) => { setEmail(e.target.value); setErrors((p) => ({ ...p, email: undefined })); }}
+            onChange={(e) => {
+              setEmail(e.target.value);
+              setErrors((p) => ({ ...p, email: undefined }));
+            }}
           />
           {errors.email && <p className="text-sm text-red-500">{errors.email}</p>}
         </LabelInputContainer>
       </div>
       <div className="grid w-full gap-1.5 mb-4">
-        <Label htmlFor="content">Your Message</Label>
+        <Label htmlFor="content">{t("contact.message", "Your Message")}</Label>
         <Textarea
-          placeholder="Tell me about about your project,"
+          placeholder={t("contact.messagePlaceholder", "Tell me about about your project,")}
           id="content"
           value={message}
-          onChange={(e) => { setMessage(e.target.value); setErrors((p) => ({ ...p, message: undefined })); }}
+          onChange={(e) => {
+            setMessage(e.target.value);
+            setErrors((p) => ({ ...p, message: undefined }));
+          }}
         />
         {errors.message && <p className="text-sm text-red-500">{errors.message}</p>}
         <p className="text-sm text-muted-foreground">
-          I&apos;ll never share your data with anyone else. Pinky promise!
+          {t("contact.privacyPromise", "I'll never share your data with anyone else. Pinky promise!")}
         </p>
       </div>
       <Button
@@ -127,11 +145,11 @@ const ContactForm = () => {
         {loading ? (
           <div className="flex items-center justify-center">
             <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-            <p>Please wait</p>
+            <p>{t("contact.pleaseWait", "Please wait")}</p>
           </div>
         ) : (
           <div className="flex items-center justify-center">
-            Send Message <ChevronRight className="w-4 h-4 ml-4" />
+            {t("contact.sendMessage", "Send Message")} <ChevronRight className="w-4 h-4 ml-4" />
           </div>
         )}
         <BottomGradient />

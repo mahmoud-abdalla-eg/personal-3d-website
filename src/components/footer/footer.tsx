@@ -1,9 +1,12 @@
+"use client";
+
 import React, { Suspense } from "react";
 import Link from "next/link";
 import { footer } from "./config";
 import { Button } from "../ui/button";
 import SocialMediaButtons from "../social/social-media-icons";
 import { config } from "@/data/config";
+import { useLanguage } from "@/contexts/i18n-context";
 
 function CopyrightYear() {
   const year = new Date().getFullYear();
@@ -11,6 +14,8 @@ function CopyrightYear() {
 }
 
 function Footer() {
+  const { t } = useLanguage();
+
   return (
     <footer className="flex w-full shrink-0 flex-col items-center gap-2 border-t border-border px-4 py-6 sm:flex-row md:px-6 sm:justify-between">
       <p className="text-xs text-gray-500 dark:text-gray-400">
@@ -18,7 +23,7 @@ function Footer() {
         <Suspense fallback={null}>
           <CopyrightYear />
         </Suspense>{" "}
-        {config.author}. All rights reserved.
+        {config.author}. {t("footer.rights", "All rights reserved.")}
       </p>
       <SocialMediaButtons />
       <nav className="flex gap-4 sm:gap-6 z-10">
@@ -31,7 +36,9 @@ function Footer() {
               href={href}
               key={`l_${index}`}
             >
-              <Button variant={"link"}>{title}</Button>
+              <Button variant={"link"}>
+                {t("footer." + title.toLowerCase(), title)}
+              </Button>
             </Link>
           );
         })}

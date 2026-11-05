@@ -12,17 +12,22 @@ import { ArrowUpRight } from "lucide-react";
 import { SiGithub } from "react-icons/si";
 import { motion } from "motion/react";
 
-import projects, { Project } from "@/data/projects";
+import projects, { Project, ProjectsLinks } from "@/data/projects";
 import { SectionHeader } from "./section-header";
 import { config } from "@/data/config";
+import { useLanguage } from "@/contexts/i18n-context";
+import { PROJECTS_ZH } from "@/data/translations";
+import { TypographyH3, TypographyP } from "@/components/ui/typography";
 
 import SectionWrapper from "../ui/section-wrapper";
 import ScrollingPreview from "../scrolling-preview";
 
 const ProjectsSection = () => {
+  const { t } = useLanguage();
+
   return (
     <SectionWrapper id="projects" className="max-w-7xl mx-auto md:min-h-[100vh] px-4 flex flex-col justify-center">
-      <SectionHeader id="projects" title="Projects" />
+      <SectionHeader id="projects" title={t("projects.title", "Projects")} />
       {projects.length > 0 ? (
         <>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto w-full">
@@ -37,7 +42,7 @@ const ProjectsSection = () => {
               className="group inline-flex items-center gap-3 px-6 py-3 rounded-full border border-border bg-card/60 hover:bg-card hover:border-primary/50 transition-all text-sm font-medium text-foreground backdrop-blur-sm shadow-sm"
             >
               <SiGithub size={18} />
-              <span>Explore all repositories on GitHub</span>
+              <span>{t("projects.githubBtn", "Explore all repositories on GitHub")}</span>
               <ArrowUpRight className="w-4 h-4 text-muted-foreground group-hover:text-primary group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
             </Link>
           </div>
@@ -45,10 +50,10 @@ const ProjectsSection = () => {
       ) : (
         <div className="flex flex-col items-center justify-center p-12 my-8 rounded-2xl border border-dashed border-border bg-card/40 backdrop-blur-sm text-center">
           <p className="text-xl md:text-2xl font-bold font-display text-foreground tracking-tight">
-            Projects will be listed soon
+            {t("projects.comingSoonTitle", "Projects will be listed soon")}
           </p>
           <p className="text-sm md:text-base text-muted-foreground mt-2 max-w-md">
-            I am currently preparing and showcasing my recent work. Please check back soon!
+            {t("projects.comingSoonDesc", "I am currently preparing and showcasing my recent work. Please check back soon!")}
           </p>
         </div>
       )}
@@ -58,6 +63,9 @@ const ProjectsSection = () => {
 
 const ProjectCard = ({ project }: { project: Project }) => {
   const [isHovered, setIsHovered] = useState(false);
+  const { isChinese, t } = useLanguage();
+  const zh = isChinese ? PROJECTS_ZH[project.id] : undefined;
+  const category = zh?.category ?? project.category;
 
   return (
     <div className="flex items-center justify-center">
@@ -83,7 +91,7 @@ const ProjectCard = ({ project }: { project: Project }) => {
                   {project.title}
                 </div>
                 <div className="text-xs bg-primary text-primary-foreground rounded-lg w-fit px-2 py-0.5 mt-1">
-                  {project.category}
+                  {category}
                 </div>
               </div>
             </div>
@@ -99,7 +107,7 @@ const ProjectCard = ({ project }: { project: Project }) => {
                   {project.title}
                 </h4>
                 <span className="shrink-0 text-[11px] uppercase tracking-widest text-muted-foreground border border-border rounded-full px-3 py-0.5">
-                  {project.category}
+                  {category}
                 </span>
               </div>
               <div className="shrink-0 flex items-center gap-4">
@@ -109,13 +117,13 @@ const ProjectCard = ({ project }: { project: Project }) => {
                     target="_blank"
                     className="text-xs text-muted-foreground hover:text-foreground transition-colors underline underline-offset-2"
                   >
-                    GitHub
+                    {t("projects.github", "GitHub")}
                   </Link>
                 )}
                 {project.live && project.live !== "#" && (
                   <Link href={project.live} target="_blank">
                     <button className="group flex items-center gap-2 bg-primary text-primary-foreground text-sm font-medium px-4 py-1.5 rounded-full hover:bg-primary/80 transition-colors">
-                      Visit
+                      {t("projects.visit", "Visit")}
                       <ArrowUpRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
                     </button>
                   </Link>
@@ -137,7 +145,7 @@ const ProjectCard = ({ project }: { project: Project }) => {
                 {project.skills.frontend?.length > 0 && (
                   <div className="flex flex-col items-center md:items-start gap-2">
                     <span className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground font-medium">
-                      Frontend / Client
+                      {t("projects.frontendClient", "Frontend / Client")}
                     </span>
                     <FloatingDock items={project.skills.frontend} />
                   </div>
@@ -145,7 +153,7 @@ const ProjectCard = ({ project }: { project: Project }) => {
                 {project.skills.backend?.length > 0 && (
                   <div className="flex flex-col items-center md:items-start gap-2">
                     <span className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground font-medium">
-                      Backend / Systems
+                      {t("projects.backendSystems", "Backend / Systems")}
                     </span>
                     <FloatingDock items={project.skills.backend} />
                   </div>
@@ -161,11 +169,30 @@ const ProjectCard = ({ project }: { project: Project }) => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.2 }}
               >
-                {project.content}
+                {zh ? (
+                  <div>
+                    <TypographyH3 className="my-4">{project.title}</TypographyH3>
+                    <TypographyP className="font-mono text-muted-foreground">
+                      {zh.subtitle}
+                    </TypographyP>
+                    <ProjectsLinks live={project.live} repo={project.github} />
+                    <TypographyP className="my-4">{zh.overview}</TypographyP>
+                    <TypographyH3 className="my-4 mt-8">{zh.featuresTitle}</TypographyH3>
+                    <ul className="list-disc pl-6 space-y-2 text-muted-foreground">
+                      {zh.features.map((feat, i) => (
+                        <li key={i}>
+                          <strong>{feat.label}：</strong>
+                          {feat.text}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ) : (
+                  project.content
+                )}
               </motion.div>
             </div>
           </ScrollArea>
-
         </ResponsiveDialogContent>
       </ResponsiveDialog>
     </div>

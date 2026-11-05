@@ -79,7 +79,7 @@ const HeroSection = () => {
                       "cursor-default sm:text-xl md:text-xl whitespace-nowrap bg-clip-text "
                     )}
                   >
-                    {t("hero.role", "A Full Stack Web Developer")}
+                    {t("hero.role", "Full-Stack Developer & AI Systems Analyst")}
                   </p>
                 </BlurIn>
               </div>

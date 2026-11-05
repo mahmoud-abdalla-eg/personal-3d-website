@@ -5,6 +5,7 @@ import { X } from "lucide-react";
 import { Button } from "./ui/button";
 import { enableMotion, usePerfProfile } from "@/hooks/use-perf-profile";
 import { cn } from "@/lib/utils";
+import { useLanguage } from "@/contexts/i18n-context";
 
 const DISMISS_KEY = "portfolio:motion-nudge-dismissed";
 
@@ -18,6 +19,7 @@ const DISMISS_KEY = "portfolio:motion-nudge-dismissed";
 export default function MotionNudge() {
   const { ready, rawReducedMotion, motionEnabled, lowEnd } = usePerfProfile();
   const [dismissed, setDismissed] = React.useState(true);
+  const { t } = useLanguage();
 
   React.useEffect(() => {
     try {
@@ -57,18 +59,17 @@ export default function MotionNudge() {
         <X className="size-4" />
       </button>
       <p className="pr-6 text-sm font-medium text-foreground">
-        Reduced motion is on
+        {t("misc.motionNudgeTitle", "Reduced motion is on")}
       </p>
       <p className="mt-1 text-xs text-muted-foreground">
-        The interactive 3D scene and animations are turned off. Want the full
-        experience?
+        {t("misc.motionNudgeDesc", "The interactive 3D scene and animations are turned off. Want the full experience?")}
       </p>
       <div className="mt-3 flex gap-2">
         <Button size="sm" onClick={enableMotion}>
-          Enable 3D
+          {t("misc.enable3D", "Enable 3D")}
         </Button>
         <Button size="sm" variant="ghost" onClick={dismiss}>
-          No thanks
+          {t("misc.noThanks", "No thanks")}
         </Button>
       </div>
     </div>

@@ -7,11 +7,14 @@ import { Download, ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import ResumeDoodle from "./resume-doodle";
 import { config } from "@/data/config";
+import { useLanguage } from "@/contexts/i18n-context";
 
 // Drop the compiled PDF here: frontend/public/Resume.pdf
 const RESUME_PATH = "/Naresh_Khatri_Resume.pdf";
 
 export default function ResumeView() {
+  const { t } = useLanguage();
+
   return (
     <div className="flex min-h-screen flex-col font-sans">
       {/* Hide the global nav on mobile, only while this page is mounted */}
@@ -29,12 +32,12 @@ export default function ResumeView() {
           className="flex items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-foreground"
         >
           <ArrowLeft className="h-4 w-4" />
-          Back to portfolio
+          {t("resume.back", "Back to portfolio")}
         </Link>
         <a href={RESUME_PATH} download>
           <Button size="sm" className="gap-2">
             <Download className="h-4 w-4" />
-            Download PDF
+            {t("resume.download", "Download PDF")}
           </Button>
         </a>
       </div>

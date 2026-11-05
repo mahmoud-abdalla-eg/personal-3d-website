@@ -2,11 +2,13 @@
 
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
+import { useLanguage } from '@/contexts/i18n-context';
 
 const STORAGE_KEY = 'radial-menu-hint-seen';
 
 export function RightClickHint({ dismissed }: { dismissed: boolean }) {
   const [visible, setVisible] = useState(false);
+  const { t } = useLanguage();
 
   useEffect(() => {
     if (localStorage.getItem(STORAGE_KEY)) return;
@@ -43,7 +45,9 @@ export function RightClickHint({ dismissed }: { dismissed: boolean }) {
             className="fixed top-16 left-1/2 z-[50] pointer-events-none"
           >
             <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-neutral-900/80 backdrop-blur-md border border-white/10 shadow-lg">
-              <span className="text-sm text-white/70">Right-click anywhere to react</span>
+              <span className="text-sm text-white/70">
+                {t("misc.radialHint", "Right-click anywhere to react")}
+              </span>
               <span className="text-xs text-white/40">✨</span>
             </div>
           </motion.div>

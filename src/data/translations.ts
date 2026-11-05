@@ -126,7 +126,7 @@ export const translations: Record<Language, Translations> = {
     },
     hero: {
       greeting: "Hi, I am",
-      role: "A Full Stack Web Developer",
+      role: "Full-Stack Developer & AI Systems Analyst",
       resumeBtn: "Resume",
       hireBtn: "Hire Me",
       devtoolsTip: "theres something waiting for you in devtools",
@@ -235,7 +235,7 @@ export const translations: Record<Language, Translations> = {
     },
     hero: {
       greeting: "你好，我是",
-      role: "全栈 Web 开发者与 AI 系统工程师",
+      role: "全栈 Web 开发者与 AI 系统分析师",
       resumeBtn: "查看简历",
       hireBtn: "合作咨询",
       devtoolsTip: "控制台里有小彩蛋在等你 👀",
