@@ -1,4 +1,6 @@
 import { EXPERIENCE, SkillNames, SKILLS } from "@/data/constants";
+import { EXPERIENCE_ZH } from "@/data/translations";
+import { useLanguage } from "@/contexts/i18n-context";
 import { SectionHeader } from "./section-header";
 import { Badge } from "../ui/badge";
 import { cn } from "@/lib/utils";
@@ -7,6 +9,9 @@ import { motion } from "motion/react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 const ExperienceSection = () => {
+  const { isChinese, t } = useLanguage();
+  const expList = isChinese ? (EXPERIENCE_ZH as unknown as typeof EXPERIENCE) : EXPERIENCE;
+
   return (
     <SectionWrapper
       className="flex flex-col items-center justify-center min-h-[120vh] py-20"
@@ -14,8 +19,8 @@ const ExperienceSection = () => {
       <div className="w-full max-w-4xl px-4 md:px-8 mx-auto">
         <SectionHeader
           id="experience"
-          title="Experience"
-          desc="My professional journey."
+          title={t("experience.title", "Experience")}
+          desc={t("experience.subtitle", "My professional journey.")}
           className="mb-12 md:mb-20 mt-0"
         />
 
@@ -23,7 +28,7 @@ const ExperienceSection = () => {
           {/* Connector Line - simplified to a subtle border */}
           <div className="absolute left-8 md:left-1/2 top-4 bottom-4 w-px bg-border hidden md:block -translate-x-1/2" />
 
-          {EXPERIENCE.map((exp, index) => (
+          {expList.map((exp, index) => (
             <div key={exp.id} className="relative">
               <ExperienceCard experience={exp} index={index} />
             </div>
@@ -41,6 +46,8 @@ const ExperienceCard = ({
   experience: (typeof EXPERIENCE)[0];
   index: number;
 }) => {
+  const { t } = useLanguage();
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -74,7 +81,7 @@ const ExperienceCard = ({
                 <span className="absolute left-[3.5px] md:left-auto md:right-[3.5px] top-2 bottom-2 w-px bg-border" />
               )}
               {experience.periods.map((p, i) => {
-                const active = p.end === "Present";
+                const active = p.end === "Present" || p.end === "至今";
                 return (
                   <li
                     key={i}
@@ -96,7 +103,7 @@ const ExperienceCard = ({
                         )}
                       />
                     </span>
-                    {p.start} - {p.end}
+                    {p.start} - {p.end === "Present" ? t("experience.present", "Present") : p.end}
                   </li>
                 );
               })}
@@ -110,22 +117,27 @@ const ExperienceCard = ({
             ))}
           </ul>
 
-          <div className="flex flex-wrap gap-2">
+          <div className="flex flex-wrap gap-2 pt-2">
             {experience.skills.map((skillName) => {
-              const skill = SKILLS[skillName as SkillNames];
+              const skill = SKILLS[skillName];
+              if (!skill) return null;
               return (
                 <Badge
                   key={skillName}
-                  variant="outline"
-                  className="gap-1.5 text-xs font-normal text-muted-foreground bg-secondary/30 border-transparent"
+                  variant="secondary"
+                  className={cn(
+                    "flex items-center gap-1.5 px-2.5 py-1 text-xs font-medium",
+                    "bg-secondary/50 text-secondary-foreground",
+                    "border border-border/50 hover:bg-secondary/80 transition-colors"
+                  )}
                 >
-                  {/* mono until card hover -> less noise across 10+ logos */}
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     src={skill.icon}
-                    alt=""
-                    className="w-3.5 h-3.5 object-contain grayscale opacity-60 transition duration-300 group-hover:grayscale-0 group-hover:opacity-100"
+                    alt={skill.label}
+                    className="w-3.5 h-3.5 object-contain"
                   />
-                  {skill.label}
+                  <span>{skill.label}</span>
                 </Badge>
               );
             })}
