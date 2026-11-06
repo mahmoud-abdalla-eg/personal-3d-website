@@ -171,11 +171,11 @@ export function createKeyboardScene(skills: readonly KeyboardSkill[], columns = 
     const descriptionId = newId("as");
     doc.assets[descriptionId] = { id: descriptionId, kind: "texture", name: descriptionArtwork(description),
       hash: `description-${id}`, size: 0 };
-    const descriptionMaterial = material(`Description ${title}${tag ? ` ${tag}` : ""}`, { color: "#ffffff", roughness: 1,
+    const descriptionMaterial = material(`Description ${title}${tag ? ` ${tag}` : ""}`, { color: "#ffffff", roughness: 0.8,
       transparent: true, maps: { map: descriptionId, normalMap: null, roughnessMap: null } });
     add({ id: newId("nd"), name: `Description ${title}${tag ? ` ${tag}` : ""}`, type: "mesh", materialId: descriptionMaterial,
-      geometry: { kind: "plane", params: { width: 4.8, height: 1.4 } },
-      transform: { ...transform([2.4, 0, 0.15]), rotation: [-Math.PI / 2, 0, 0] },
+      geometry: { kind: "plane", params: { width: 4.8, height: 1.2 } },
+      transform: { ...transform([2.4, 0, 0.6]), rotation: [-Math.PI / 2, 0, 0] },
       visible: true, castShadow: false, receiveShadow: false, children: [] }, id);
     return id;
   };
@@ -309,7 +309,7 @@ function descriptionArtwork(text: string): string {
 
   const escape = (line: string) => line.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
   const size = Math.min(68, Math.floor(250 / Math.max(lines.length, 1)));
-  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="300" viewBox="0 0 1024 300"><g fill="white" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif" font-size="${size}" text-anchor="start">${lines.map((line, index) => `<text x="0" y="${78 + index * size * 1.2}">${escape(line)}</text>`).join("")}</g></svg>`;
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="300" viewBox="0 0 1024 300"><g fill="white" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif" font-weight="700" font-size="${size}" text-anchor="start">${lines.map((line, index) => `<text x="0" y="${78 + index * size * 1.2}">${escape(line)}</text>`).join("")}</g></svg>`;
   return `data:image/svg+xml,${encodeURIComponent(svg)}`;
 }
 

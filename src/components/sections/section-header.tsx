@@ -19,7 +19,7 @@ export const SectionHeader = ({ id, title, desc, className }: { id: string, titl
           </h2>
         </BoxReveal>
       </Link>
-      <p className="mx-auto line-clamp-4 max-w-3xl font-normal text-base text-center text-muted-foreground">
+      <p className="mx-auto line-clamp-4 max-w-3xl font-medium text-base text-center text-foreground/85 dark:text-zinc-300">
         {desc}
       </p>
     </div>

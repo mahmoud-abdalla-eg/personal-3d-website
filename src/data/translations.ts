@@ -385,7 +385,6 @@ export const EXPERIENCE_ZH: LocalizedExperience[] = [
       SkillNames.TS,
       SkillNames.JS,
       SkillNames.GIT,
-      SkillNames.CLAUDE,
     ],
   },
   {

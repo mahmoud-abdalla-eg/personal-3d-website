@@ -362,7 +362,6 @@ export const EXPERIENCE: Experience[] = [
       SkillNames.TS,
       SkillNames.JS,
       SkillNames.GIT,
-      SkillNames.CLAUDE,
     ],
   },
   {

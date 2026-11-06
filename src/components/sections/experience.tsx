@@ -21,7 +21,7 @@ const ExperienceSection = () => {
           id="experience"
           title={t("experience.title", "Experience")}
           desc={t("experience.subtitle", "My professional journey.")}
-          className="mb-12 md:mb-20 mt-0"
+          className="relative mb-12 md:mb-20 mt-0"
         />
 
         <div className="flex flex-col gap-8 md:gap-12 relative">
