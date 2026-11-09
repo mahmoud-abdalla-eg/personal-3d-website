@@ -6,6 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { CalendarDays, ArrowUpRight, Clock } from "lucide-react";
 import { motion } from "motion/react";
 import { useLanguage } from "@/contexts/i18n-context";
+import { BLOGS_ZH } from "@/data/translations";
 
 type Post = {
   slug: string;
@@ -20,7 +21,14 @@ type Post = {
   wordCount: number;
 };
 
-function readTime(wordCount: number) {
+function readTime(slug: string, wordCount: number, isChinese: boolean) {
+  if (isChinese) {
+    const zh = BLOGS_ZH[slug];
+    if (zh?.content) {
+      const chars = zh.content.replace(/\s+/g, "").length;
+      return Math.max(1, Math.ceil(chars / 350));
+    }
+  }
   return Math.max(1, Math.ceil(wordCount / 200));
 }
 
@@ -37,6 +45,11 @@ export default function BlogListClient({ posts }: { posts: Post[] }) {
   const { isChinese, t } = useLanguage();
   const featured = posts[0];
   const rest = posts.slice(1);
+
+  const featuredZh = isChinese && featured ? BLOGS_ZH[featured.slug] : null;
+  const featuredTitle = featuredZh?.title ?? featured?.metadata.title;
+  const featuredSummary = featuredZh?.summary ?? featured?.metadata.summary;
+  const featuredTags = featuredZh?.tags ?? featured?.metadata.tags ?? [];
 
   return (
     <div className="min-h-screen font-sans">
@@ -94,21 +107,21 @@ export default function BlogListClient({ posts }: { posts: Post[] }) {
                     </span>
                     <span className="flex items-center gap-1.5">
                       <Clock className="w-3.5 h-3.5" />
-                      {readTime(featured.wordCount)} {t("blogs.minRead", "min read")}
+                      {readTime(featured.slug, featured.wordCount, isChinese)} {t("blogs.minRead", "min read")}
                     </span>
                   </div>
 
                   <h2 className="font-display text-2xl md:text-3xl leading-[1.15] mb-4 group-hover:text-[hsl(20,100%,70%)] transition-colors duration-300">
-                    {featured.metadata.title}
+                    {featuredTitle}
                   </h2>
 
                   <p className="text-muted-foreground text-lg leading-relaxed max-w-2xl mb-8 font-sans">
-                    {featured.metadata.summary}
+                    {featuredSummary}
                   </p>
 
                   <div className="flex items-center justify-between">
                     <div className="flex gap-2 flex-wrap">
-                      {featured.metadata.tags?.map((tag) => (
+                      {featuredTags.map((tag) => (
                         <Badge
                           key={tag}
                           variant="outline"
@@ -141,57 +154,64 @@ export default function BlogListClient({ posts }: { posts: Post[] }) {
 
         {/* Post grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {rest.map((post, index) => (
-            <motion.div
-              key={post.slug}
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{
-                duration: 0.6,
-                delay: 0.35 + index * 0.1,
-                ease: [0.22, 1, 0.36, 1],
-              }}
-            >
-              <Link href={`/blogs/${post.slug}`} className="group block h-full">
-                <div className="h-full border border-border/50 rounded-xl p-6 md:p-8 transition-all duration-300 hover:border-[hsl(20,100%,70%)]/30 hover:bg-card/40 bg-card/20 backdrop-blur-sm">
-                  <div className="flex items-center gap-3 mb-4 text-xs text-muted-foreground font-sans">
-                    <span className="flex items-center gap-1.5">
-                      <CalendarDays className="w-3 h-3" />
-                      {formatDate(post.metadata.publishedAt, isChinese)}
-                    </span>
-                    <span className="h-1 w-1 rounded-full bg-muted-foreground/50" />
-                    <span className="flex items-center gap-1.5">
-                      <Clock className="w-3 h-3" />
-                      {readTime(post.wordCount)} {t("blogs.min", "min")}
-                    </span>
-                  </div>
+          {rest.map((post, index) => {
+            const postZh = isChinese ? BLOGS_ZH[post.slug] : null;
+            const postTitle = postZh?.title ?? post.metadata.title;
+            const postSummary = postZh?.summary ?? post.metadata.summary;
+            const postTags = postZh?.tags ?? post.metadata.tags ?? [];
 
-                  <h3 className="font-display text-lg md:text-xl leading-tight mb-3 group-hover:text-[hsl(20,100%,70%)] transition-colors duration-300">
-                    {post.metadata.title}
-                  </h3>
-
-                  <p className="text-muted-foreground text-sm leading-relaxed mb-6 line-clamp-2 font-sans">
-                    {post.metadata.summary}
-                  </p>
-
-                  <div className="flex items-center justify-between mt-auto">
-                    <div className="flex gap-1.5 flex-wrap">
-                      {post.metadata.tags?.slice(0, 2).map((tag) => (
-                        <Badge
-                          key={tag}
-                          variant="outline"
-                          className="border-border/50 text-muted-foreground text-[10px] rounded-full px-2 py-0"
-                        >
-                          {tag}
-                        </Badge>
-                      ))}
+            return (
+              <motion.div
+                key={post.slug}
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{
+                  duration: 0.6,
+                  delay: 0.35 + index * 0.1,
+                  ease: [0.22, 1, 0.36, 1],
+                }}
+              >
+                <Link href={`/blogs/${post.slug}`} className="group block h-full">
+                  <div className="h-full border border-border/50 rounded-xl p-6 md:p-8 transition-all duration-300 hover:border-[hsl(20,100%,70%)]/30 hover:bg-card/40 bg-card/20 backdrop-blur-sm">
+                    <div className="flex items-center gap-3 mb-4 text-xs text-muted-foreground font-sans">
+                      <span className="flex items-center gap-1.5">
+                        <CalendarDays className="w-3 h-3" />
+                        {formatDate(post.metadata.publishedAt, isChinese)}
+                      </span>
+                      <span className="h-1 w-1 rounded-full bg-muted-foreground/50" />
+                      <span className="flex items-center gap-1.5">
+                        <Clock className="w-3 h-3" />
+                        {readTime(post.slug, post.wordCount, isChinese)} {t("blogs.min", "min")}
+                      </span>
                     </div>
-                    <ArrowUpRight className="w-4 h-4 text-muted-foreground group-hover:text-[hsl(20,100%,70%)] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" />
+
+                    <h3 className="font-display text-lg md:text-xl leading-tight mb-3 group-hover:text-[hsl(20,100%,70%)] transition-colors duration-300">
+                      {postTitle}
+                    </h3>
+
+                    <p className="text-muted-foreground text-sm leading-relaxed mb-6 line-clamp-2 font-sans">
+                      {postSummary}
+                    </p>
+
+                    <div className="flex items-center justify-between mt-auto">
+                      <div className="flex gap-1.5 flex-wrap">
+                        {postTags.slice(0, 3).map((tag) => (
+                          <Badge
+                            key={tag}
+                            variant="outline"
+                            className="border-border/50 text-muted-foreground text-[10px] rounded-full px-2 py-0"
+                          >
+                            {tag}
+                          </Badge>
+                        ))}
+                      </div>
+                      <ArrowUpRight className="w-4 h-4 text-muted-foreground group-hover:text-[hsl(20,100%,70%)] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" />
+                    </div>
                   </div>
-                </div>
-              </Link>
-            </motion.div>
-          ))}
+                </Link>
+              </motion.div>
+            );
+          })}
         </div>
 
         {/* Empty state */}

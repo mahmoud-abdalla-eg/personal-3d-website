@@ -96,6 +96,7 @@ export interface Translations {
     min: string;
     readArticle: string;
     noPosts: string;
+    allPosts: string;
     backAll: string;
   };
   misc: {
@@ -206,6 +207,7 @@ export const translations: Record<Language, Translations> = {
       min: "min",
       readArticle: "Read article",
       noPosts: "No posts yet. Check back soon.",
+      allPosts: "All posts",
       backAll: "Back to all posts",
     },
     misc: {
@@ -313,6 +315,7 @@ export const translations: Record<Language, Translations> = {
       min: "分钟",
       readArticle: "阅读全文",
       noPosts: "暂无文章，敬请期待。",
+      allPosts: "所有文章",
       backAll: "返回所有文章",
     },
     misc: {
@@ -556,3 +559,6 @@ export const PROJECTS_ZH: Record<string, LocalizedProjectDetails> = {
     ],
   },
 };
+
+export { BLOGS_ZH, type BlogTranslation } from "./blogs-zh";
+

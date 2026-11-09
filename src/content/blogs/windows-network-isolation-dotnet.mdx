@@ -1,0 +1,93 @@
+---
+title: "Architecting Per-Process Network Isolation on Windows with .NET 8"
+publishedAt: "2026-10-18"
+summary: "How I engineered Win Antify Proxy to achieve process-level proxy steering and dynamic environment variable control without polluting global Windows registry settings."
+author: "Mahmoud Abdalla"
+tags: ["C#", ".NET 8", "Systems", "Networking"]
+---
+
+# Architecting Per-Process Network Isolation on Windows with .NET 8
+
+Most developer tools and enterprise network clients on Windows rely on system-wide proxy settings. Modifying the global Windows internet settings (`InternetSetOption` or registry keys under `HKCU\Software\Microsoft\Windows\CurrentVersion\Internet Settings`) affects every running application on the machine.
+
+When developing distributed services, testing localized gateways, or working across split corporate networks, global proxying causes immediate friction. A proxy intended solely for an automated test harness or a legacy client ends up intercepting internal browser traffic, messaging clients, and IDE background services.
+
+To solve this, I designed and built **Win Antify Proxy**—a lightweight Windows desktop application written in C# and .NET 8 WPF that provides granular, per-process network isolation and dynamic environment management.
+
+## The Core Challenge: Process-Level Boundaries
+
+Windows does not natively offer an application-layer toggle to say *"route only PID 14280 through proxy 127.0.0.1:7897"*. Conventional approaches usually fall into two categories:
+
+1. **Kernel-level WFP (Windows Filtering Platform) drivers**: Extremely powerful, but require kernel signing, elevated driver installation, and high maintenance overhead.
+2. **Environment Variable & Wrapper Launchers**: Injecting standard proxy variables (`HTTP_PROXY`, `HTTPS_PROXY`, `ALL_PROXY`, `NO_PROXY`) directly into child process execution environments.
+
+For a zero-pollution developer utility, the second approach combined with process lifecycle monitoring offers the optimal balance of safety, portability, and zero system registry alteration.
+
+## 1. Clean Process Spawning & Environment Inheritance
+
+When a target executable is launched through Win Antify Proxy, we construct a custom `ProcessStartInfo` block that isolates the environment block without inheriting polluted global state:
+
+```csharp
+public Process LaunchIsolatedProcess(string executablePath, ProxyProfile profile, string[]? arguments = null)
+{
+    var startInfo = new ProcessStartInfo
+    {
+        FileName = executablePath,
+        Arguments = arguments != null ? string.Join(" ", arguments) : string.Empty,
+        UseShellExecute = false,
+        CreateNoWindow = false
+    };
+
+    // Apply granular routing variables
+    startInfo.EnvironmentVariables["HTTP_PROXY"] = profile.Endpoint;
+    startInfo.EnvironmentVariables["HTTPS_PROXY"] = profile.Endpoint;
+    startInfo.EnvironmentVariables["ALL_PROXY"] = profile.Endpoint;
+    startInfo.EnvironmentVariables["NO_PROXY"] = profile.BypassList;
+
+    var process = new Process { StartInfo = startInfo };
+    process.EnableRaisingEvents = true;
+    process.Exited += (s, e) => OnProcessTerminated(process.Id);
+    process.Start();
+
+    return process;
+}
+```
+
+By explicitly setting `UseShellExecute = false`, we bypass the Windows shell's default registry lookup, allowing the child process to receive a strictly scoped environment block.
+
+## 2. Real-Time Telemetry and Socket Diagnostics
+
+A critical feature in developer tooling is visibility. Without real-time metrics, diagnosing connection timeouts or failed handshakes becomes guesswork.
+
+Win Antify Proxy hooks into high-resolution performance counters to track:
+
+- **Socket Round-Trip Time (RTT)**: Periodic TCP ping probes to the upstream gateway.
+- **Throughput Telemetry**: Byte counters mapped across active process handles.
+- **Connection Health Checks**: Instant visual cues when upstream endpoints fail or renegotiate TLS handshakes.
+
+```csharp
+// Lightweight socket latency probe
+public async Task<TimeSpan> MeasureGatewayLatencyAsync(IPEndPoint endpoint, CancellationToken ct)
+{
+    using var socket = new Socket(endpoint.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
+    var stopwatch = Stopwatch.StartNew();
+    
+    await socket.ConnectAsync(endpoint, ct);
+    stopwatch.Stop();
+    
+    return stopwatch.Elapsed;
+}
+```
+
+## 3. Zero System Pollution and Clean Teardown
+
+A common frustration with proxy managers is finding your network broken after a sudden crash or reboot because the tool left global proxy flags enabled.
+
+In Win Antify Proxy, the architecture is deliberately designed so that:
+- **No Global Registry Keys are Touched**: The application never touches `ProxyEnable` or `ProxyServer` in `Internet Settings`.
+- **Ephemeral State**: All configuration exists either in local per-user config files or in volatile process memory.
+- **Graceful Child Process Cleanup**: Process trees are tracked using Windows Job Objects, ensuring orphaned subprocesses are cleanly handled upon parent exit.
+
+## Looking Ahead
+
+Building developer tools on Windows requires respecting the operating system's architecture while delivering modern ergonomics. Win Antify Proxy demonstrates that with modern .NET 8 and thoughtful system design, you can achieve clean isolation, rapid startup times, and intuitive desktop experiences.

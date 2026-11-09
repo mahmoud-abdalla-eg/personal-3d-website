@@ -6,6 +6,7 @@ import {
   SKILL_DESCRIPTIONS_ZH,
   EXPERIENCE_ZH,
   PROJECTS_ZH,
+  BLOGS_ZH,
 } from "../data/translations";
 import { SKILLS, EXPERIENCE } from "../data/constants";
 import projects from "../data/projects";
@@ -161,6 +162,21 @@ test("Translations completeness: All projects have Chinese translations", () => 
     assert.ok(zh.subtitle.length > 0);
     assert.ok(zh.overview.length > 0);
     assert.ok(zh.features.length > 0);
+  }
+});
+
+test("Translations completeness: All blogs have Chinese translations", () => {
+  const blogs = ["windows-network-isolation-dotnet", "building-resilient-llm-evaluation-pipelines"];
+  for (const slug of blogs) {
+    assert.ok(
+      slug in BLOGS_ZH,
+      `Blog "${slug}" is missing Chinese translation`
+    );
+    const zh = BLOGS_ZH[slug];
+    assert.ok(zh.title.length > 0, `Blog "${slug}" title is empty`);
+    assert.ok(zh.summary.length > 0, `Blog "${slug}" summary is empty`);
+    assert.ok(zh.tags.length > 0, `Blog "${slug}" tags are empty`);
+    assert.ok(zh.content.length > 0, `Blog "${slug}" content is empty`);
   }
 });
 
