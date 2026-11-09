@@ -1,16 +1,12 @@
 "use client";
 
-import { usePathname } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 import Header from "@/components/header/header";
 import Footer from "@/components/footer/footer";
 import AppOverlays from "@/components/app-overlays";
+import React, { Suspense } from "react";
 
-/**
- * Wraps the app shell. The `/components*` showcase routes are rendered
- * "bare" (no header / footer / decorative overlays) so the component
- * galleries can be judged in isolation. Everything else gets full chrome.
- */
-export default function SiteFrame({
+function FrameContent({
   children,
   githubStars,
 }: {
@@ -18,9 +14,27 @@ export default function SiteFrame({
   githubStars?: React.ReactNode;
 }) {
   const pathname = usePathname();
-  const bare = pathname?.startsWith("/components") ?? false;
+  const searchParams = useSearchParams();
+  const isBare =
+    (pathname?.startsWith("/components") ||
+      searchParams.get("bare") === "true") ??
+    false;
 
-  if (bare) return <>{children}</>;
+  if (isBare) {
+    return (
+      <>
+        <style>{`
+          .scroll-indicator,
+          div[class*="ScrollDownIcon"],
+          div[class*="translate-x-[-50%]"],
+          div.absolute.bottom-10 {
+            display: none !important;
+          }
+        `}</style>
+        {children}
+      </>
+    );
+  }
 
   return (
     <>
@@ -29,5 +43,19 @@ export default function SiteFrame({
       <Footer />
       <AppOverlays />
     </>
+  );
+}
+
+export default function SiteFrame({
+  children,
+  githubStars,
+}: {
+  children: React.ReactNode;
+  githubStars?: React.ReactNode;
+}) {
+  return (
+    <Suspense fallback={<>{children}</>}>
+      <FrameContent githubStars={githubStars}>{children}</FrameContent>
+    </Suspense>
   );
 }
